@@ -10,4 +10,11 @@
   </PropertyGroup>
   <ItemGroup>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Input\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Input\AudioInput.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\PlaybackState.cs" />
+  </ItemGroup>
 </Project>
