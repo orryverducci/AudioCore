@@ -16,5 +16,6 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Input\AudioInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\PlaybackState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\TestToneInput.cs" />
   </ItemGroup>
 </Project>
