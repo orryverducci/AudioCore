@@ -69,7 +69,7 @@ namespace AudioCore.Foundation
         /// </summary>
         /// <returns>The audio samples</returns>
         /// <param name="samplesRequested">The number of samples required</param>
-        public virtual byte[] GetSamples(int samplesRequested)
+        public virtual double[] GetSamples(int samplesRequested)
         {
             throw new NotImplementedException("The GetSamples method has not been implemented for this audio input");
         }
