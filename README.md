@@ -8,7 +8,7 @@ AudioCore is developed by [Orry Verducci](http://www.orryverducci.co.uk/).
 
 Development Environment
 -----------------------
-This project has been developed in Microsoft Visual Studio 2015.
+This project has been developed in Microsoft Visual Studio 2015 and Xamarin Studio. Visual Studio Code is also supported.
 
 Development State
 -----------------
