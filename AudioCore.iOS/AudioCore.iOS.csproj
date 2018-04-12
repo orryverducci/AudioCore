@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>AudioCore.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>AudioCore</AssemblyName>
+    <AssemblyName>AudioCore.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
