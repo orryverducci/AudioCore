@@ -53,7 +53,12 @@
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
-  <Import Project="..\AudioCore.Foundation\AudioCore.Foundation.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\AudioCore\AudioCore.csproj">
+      <Project>{C8B758B8-8C43-455A-A997-8282DCA269DC}</Project>
+      <Name>AudioCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

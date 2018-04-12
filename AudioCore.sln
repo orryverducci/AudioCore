@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AudioCore.Foundation", "AudioCore.Foundation\AudioCore.Foundation.shproj", "{9903647D-5946-43AC-90F2-FF0212AD3B29}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioCore.Win32", "AudioCore.Win32\AudioCore.Win32.csproj", "{8196BCF6-8D43-460A-A5DA-0396A51DF873}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioCore.UWP", "AudioCore.UWP\AudioCore.UWP.csproj", "{C918650E-DF61-4987-BD3B-095B58C25237}"
@@ -21,6 +19,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioCore.iOS", "AudioCore.iOS\AudioCore.iOS.csproj", "{21CE6FCB-7988-4E8B-9E96-2CC3C7FF8EEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioCore.Mac", "AudioCore.Mac\AudioCore.Mac.csproj", "{09CC89E9-7FF9-4CDD-9EF6-49B8B9851F71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioCore", "AudioCore\AudioCore.csproj", "{C8B758B8-8C43-455A-A997-8282DCA269DC}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -121,6 +121,22 @@ Global
 		{09CC89E9-7FF9-4CDD-9EF6-49B8B9851F71}.Release|x64.Build.0 = Release|Any CPU
 		{09CC89E9-7FF9-4CDD-9EF6-49B8B9851F71}.Release|x86.ActiveCfg = Release|Any CPU
 		{09CC89E9-7FF9-4CDD-9EF6-49B8B9851F71}.Release|x86.Build.0 = Release|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Debug|x64.Build.0 = Debug|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Debug|x86.Build.0 = Debug|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Release|ARM.Build.0 = Release|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Release|x64.ActiveCfg = Release|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Release|x64.Build.0 = Release|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Release|x86.ActiveCfg = Release|Any CPU
+		{C8B758B8-8C43-455A-A997-8282DCA269DC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

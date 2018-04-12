@@ -42,6 +42,11 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <Import Project="..\AudioCore.Foundation\AudioCore.Foundation.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\AudioCore\AudioCore.csproj">
+      <Project>{C8B758B8-8C43-455A-A997-8282DCA269DC}</Project>
+      <Name>AudioCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
