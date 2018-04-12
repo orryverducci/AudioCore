@@ -1,17 +1,19 @@
 {
-    "version": "0.1.0",
-    "command": "msbuild",
-    "args": [
-        "/property:GenerateFullPaths=true"
-    ],
-    "taskSelector": "/t:",
-    "showOutput": "silent",
+    "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "build",
-            "showOutput": "silent",
-            "problemMatcher": "$msCompile",
-            "isBuildCommand": true
+            "label": "build",
+            "type": "shell",
+            "command": "msbuild",
+            "args": [
+                "/property:GenerateFullPaths=true",
+                "/t:build"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
         }
     ]
 }
