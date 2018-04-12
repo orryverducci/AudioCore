@@ -72,8 +72,6 @@ namespace AudioCore
             SampleRate = sampleRate;
             Frequency = frequency;
             Volume = volume;
-            // Set bit depth to 64 bits
-            BitDepth = 64;
             // Set playback state as playing
             PlaybackState = PlaybackState.PLAYING;
         }
