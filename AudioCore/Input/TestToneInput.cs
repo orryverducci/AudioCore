@@ -51,7 +51,15 @@ namespace AudioCore
         #region Constructor
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Foundation.TestToneInput"/> class.
-        /// Generates a continuous 1kHz sine wave test tone.
+        /// Generates a continuous 1kHz sine wave test tone at full volume.
+        /// </summary>
+        /// <param name="channels">The number of audio channels required</param>
+        /// <param name="sampleRate">The audio sample rate required</param>
+        public TestToneInput(int channels, int sampleRate) : this(channels, sampleRate, 1000, 0) {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:AudioCore.Foundation.TestToneInput"/> class.
+        /// Generates a continuous 1kHz sine wave test tone at the requested volume.
         /// </summary>
         /// <param name="channels">The number of audio channels required</param>
         /// <param name="sampleRate">The audio sample rate required</param>
@@ -60,7 +68,7 @@ namespace AudioCore
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Foundation.TestToneInput"/> class.
-        /// Generates a continuous sine wave test tone at the requested frequency.
+        /// Generates a continuous sine wave test tone at the requested frequency and volume.
         /// </summary>
         /// <param name="channels">The number of audio channels required</param>
         /// <param name="sampleRate">The audio sample rate required</param>
