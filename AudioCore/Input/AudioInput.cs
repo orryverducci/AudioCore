@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace AudioCore
 {
@@ -36,7 +37,7 @@ namespace AudioCore
         /// </summary>
         /// <returns>The audio samples</returns>
         /// <param name="samplesRequested">The number of samples required</param>
-        public virtual double[] GetSamples(int samplesRequested)
+        public virtual async Task<double[]> GetSamples(int samplesRequested)
         {
             throw new NotImplementedException("The GetSamples method has not been implemented for this audio input");
         }

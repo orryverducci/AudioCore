@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace AudioCore
 {
@@ -78,7 +79,7 @@ namespace AudioCore
         #endregion
 
         #region Methods
-        public override double[] GetSamples(int samplesRequested)
+        public override async Task<double[]> GetSamples(int samplesRequested)
         {
             // Create array of samples
             double[] audio = new double[samplesRequested];
