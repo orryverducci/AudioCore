@@ -13,9 +13,9 @@ namespace AudioCore
         public int Channels { get; protected set; }
 
         /// <summary>
-        /// Gets the audio sample rate
+        /// Gets the audio sample rate in Hertz
         /// </summary>
-        /// <value>The audio sample rate</value>
+        /// <value>The audio sample rate in Hertz</value>
         public int SampleRate { get; protected set; }
 
         /// <summary>

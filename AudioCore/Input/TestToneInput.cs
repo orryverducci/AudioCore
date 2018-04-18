@@ -54,7 +54,7 @@ namespace AudioCore
         /// Generates a continuous 1kHz sine wave test tone at full volume.
         /// </summary>
         /// <param name="channels">The number of audio channels required</param>
-        /// <param name="sampleRate">The audio sample rate required</param>
+        /// <param name="sampleRate">The audio sample rate required in Hertz</param>
         public TestToneInput(int channels, int sampleRate) : this(channels, sampleRate, 1000, 0) {}
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace AudioCore
         /// Generates a continuous 1kHz sine wave test tone at the requested volume.
         /// </summary>
         /// <param name="channels">The number of audio channels required</param>
-        /// <param name="sampleRate">The audio sample rate required</param>
+        /// <param name="sampleRate">The audio sample rate required in Hertz</param>
         /// <param name="volume">The audio output volume in dBFS</param>
         public TestToneInput(int channels, int sampleRate, int volume) : this(channels, sampleRate, 1000, volume) {}
 
@@ -71,7 +71,7 @@ namespace AudioCore
         /// Generates a continuous sine wave test tone at the requested frequency and volume.
         /// </summary>
         /// <param name="channels">The number of audio channels required</param>
-        /// <param name="sampleRate">The audio sample rate required</param>
+        /// <param name="sampleRate">The audio sample rate required in Hertz</param>
         /// <param name="frequency">The frequency of the tone required in Hertz</param>
         /// <param name="volume">The audio output volume in dBFS</param>
         public TestToneInput(int channels, int sampleRate, int frequency, int volume)
