@@ -92,7 +92,7 @@ namespace AudioCore
             // Create array of samples
             double[] audio = new double[samplesRequested];
             // Generate audio for samples requested
-            for (int i = 0; i < samplesRequested; i++)
+            for (int i = 0; i < (samplesRequested / Channels); i++)
             {
                 // Increase the sine wave sample number by 1
                 _sampleNumber++;
@@ -101,8 +101,17 @@ namespace AudioCore
                 {
                     _sampleNumber = 1;
                 }
-                // Generate sine wave sample
-                audio[i] = Math.Sin(2 * Math.PI * Frequency * (_sampleNumber / SampleRate)) * _volumeLinear;
+                // Generate sine wave value
+                double sineValue = Math.Sin(2 * Math.PI * Frequency * (_sampleNumber / SampleRate)) * _volumeLinear;
+                // Copy sine wave value to samples for each channel
+                int firstChannelSample = i * Channels;
+                for (int x = 0; x < Channels; x++)
+                {
+                    if ((firstChannelSample + x) < samplesRequested)
+                    {
+                        audio[firstChannelSample + x] = sineValue;
+                    }
+                }
             }
             // Return samples
             return audio;
