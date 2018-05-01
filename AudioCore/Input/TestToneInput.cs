@@ -106,6 +106,11 @@ namespace AudioCore
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Get test tone audio frames
+        /// </summary>
+        /// <returns>The test tone audio frames</returns>
+        /// <param name="framesRequested">The number of frames required</param>
         public override async Task<double[]> GetFrames(int framesRequested)
         {
             // Create array of samples
