@@ -33,13 +33,13 @@ namespace AudioCore
 
         #region Methods
         /// <summary>
-        /// Get audio samples from the input
+        /// Get frames of audio samples from the input
         /// </summary>
         /// <returns>The audio samples</returns>
-        /// <param name="samplesRequested">The number of samples required</param>
-        public virtual async Task<double[]> GetSamples(int samplesRequested)
+        /// <param name="framesRequested">The number of frames required</param>
+        public virtual async Task<double[]> GetFrames(int framesRequested)
         {
-            throw new NotImplementedException("The GetSamples method has not been implemented for this audio input");
+            throw new NotImplementedException("The GetFrames method has not been implemented for this audio input");
         }
         #endregion
     }

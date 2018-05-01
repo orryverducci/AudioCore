@@ -7,9 +7,9 @@ namespace AudioCore
     {
         #region Private Fields
         /// <summary>
-        /// The number of the current sample in the sine wave
+        /// The number of the current frame in the sine wave
         /// </summary>
-        private int _sampleNumber;
+        private int _frameNumber;
 
         /// <summary>
         /// The set audio volume in dBFS
@@ -87,30 +87,27 @@ namespace AudioCore
         #endregion
 
         #region Methods
-        public override async Task<double[]> GetSamples(int samplesRequested)
+        public override async Task<double[]> GetFrames(int framesRequested)
         {
             // Create array of samples
-            double[] audio = new double[samplesRequested];
-            // Generate audio for samples requested
-            for (int i = 0; i < (samplesRequested / Channels); i++)
+            double[] audio = new double[framesRequested * Channels];
+            // Generate audio for frames requested
+            for (int i = 0; i < (framesRequested); i++)
             {
                 // Increase the sine wave sample number by 1
-                _sampleNumber++;
+                _frameNumber++;
                 // If the sample reaches the sample rate, reset sample number
-                if (_sampleNumber > SampleRate)
+                if (_frameNumber > SampleRate)
                 {
-                    _sampleNumber = 1;
+                    _frameNumber = 1;
                 }
                 // Generate sine wave value
-                double sineValue = Math.Sin(2 * Math.PI * Frequency * (_sampleNumber / SampleRate)) * _volumeLinear;
+                double sineValue = Math.Sin(2 * Math.PI * Frequency * (_frameNumber / SampleRate)) * _volumeLinear;
                 // Copy sine wave value to samples for each channel
                 int firstChannelSample = i * Channels;
                 for (int x = 0; x < Channels; x++)
                 {
-                    if ((firstChannelSample + x) < samplesRequested)
-                    {
-                        audio[firstChannelSample + x] = sineValue;
-                    }
+                    audio[firstChannelSample + x] = sineValue;
                 }
             }
             // Return samples
