@@ -7,6 +7,11 @@ namespace AudioCore
     {
         #region Private Fields
         /// <summary>
+        /// The frequency of the test tone in Hertz
+        /// </summary>
+        private int _frequency;
+
+        /// <summary>
         /// The number of the current frame in the sine wave
         /// </summary>
         private int _frameNumber;
@@ -27,7 +32,21 @@ namespace AudioCore
         /// Gets the frequency of the test tone in Hertz
         /// </summary>
         /// <value>The frequency of the test tone in Hertz</value>
-        public int Frequency { get; private set; }
+        public int Frequency
+        {
+            get
+            {
+                return _frequency;
+            }
+            private set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "The frequency must be greater than 0");
+                }
+                _frequency = value;
+            }
+        }
 
         /// <summary>
         /// Gets the volume of the test tone in dBFS
