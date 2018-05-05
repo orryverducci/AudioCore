@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace AudioCore
+namespace AudioCore.Input
 {
     public class AudioInput
     {

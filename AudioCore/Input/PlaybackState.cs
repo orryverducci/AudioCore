@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AudioCore
+namespace AudioCore.Input
 {
     public enum PlaybackState
     {
