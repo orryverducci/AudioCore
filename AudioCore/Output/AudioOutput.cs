@@ -31,7 +31,7 @@ namespace AudioCore.Output
         /// <summary>
         /// The audio inputs
         /// </summary>
-        private List<AudioInput> _audioInputs;
+        private List<AudioInput> _audioInputs = new List<AudioInput>();
         #endregion
 
         #region Properties
