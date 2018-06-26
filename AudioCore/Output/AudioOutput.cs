@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AudioCore.Common;
 using AudioCore.Input;
 
 namespace AudioCore.Output
@@ -120,6 +121,12 @@ namespace AudioCore.Output
                 _bitDepth = value;
             }
         }
+
+        /// <summary>
+        /// Gets the current playback state
+        /// </summary>
+        /// <value>Whether the audio output is playing or not</value>
+        public PlaybackState PlaybackState { get; protected set; }
         #endregion
 
         #region Methods
@@ -157,6 +164,22 @@ namespace AudioCore.Output
             {
                 throw new ArgumentException("The input hasn't been added to this output", nameof(input));
             }
+        }
+
+        /// <summary>
+        /// Start playback from the audio output
+        /// </summary>
+        public virtual void Start()
+        {
+            throw new NotImplementedException("The Start method has not been implemented for this audio output");
+        }
+
+        /// <summary>
+        /// Stop playback from the audio output
+        /// </summary>
+        public virtual void Stop()
+        {
+            throw new NotImplementedException("The Stop method has not been implemented for this audio output");
         }
 
         /// <summary>
