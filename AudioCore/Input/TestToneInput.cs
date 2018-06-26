@@ -127,7 +127,7 @@ namespace AudioCore.Input
                     _frameNumber = 1;
                 }
                 // Generate sine wave value
-                double sineValue = Math.Sin(2 * Math.PI * Frequency * (_frameNumber / SampleRate)) * _volumeLinear;
+                double sineValue = Math.Sin(2 * Math.PI * Frequency * ((double)_frameNumber / (double)SampleRate)) * _volumeLinear;
                 // Copy sine wave value to samples for each channel
                 int firstChannelSample = i * Channels;
                 for (int x = 0; x < Channels; x++)
