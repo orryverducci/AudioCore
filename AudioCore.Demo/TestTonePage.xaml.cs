@@ -21,7 +21,7 @@ namespace AudioCore.Demo
         {
             switch(output.PlaybackState)
             {
-                case PlaybackState.NOTPLAYING:
+                case PlaybackState.STOPPED:
                     output.Start();
                     playbackButton.Text = "Stop";
                     break;

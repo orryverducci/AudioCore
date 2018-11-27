@@ -74,10 +74,10 @@ namespace AudioCore.Mac.Output
         /// </summary>
         public override void Stop()
         {
-            if (PlaybackState != PlaybackState.NOTPLAYING)
+            if (PlaybackState != PlaybackState.STOPPED)
             {
                 audioUnit.Stop();
-                PlaybackState = PlaybackState.NOTPLAYING;
+                PlaybackState = PlaybackState.STOPPED;
             }
         }
 

@@ -4,7 +4,7 @@ namespace AudioCore.Common
 {
     public enum PlaybackState
     {
-        NOTPLAYING,
+        STOPPED,
         PLAYING
     }
 }
