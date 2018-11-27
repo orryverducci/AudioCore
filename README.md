@@ -17,14 +17,14 @@ The following table shows the current state of each feature:
 | Feature          | State         |
 | ---------------- |:-------------:|
 | Audio Inputs     | 🕒 In progress |
-| Audio Outputs    | ❌ Not started |
+| Audio Outputs    | 🕒 In progress |
 | Decoders         | ❌ Not started |
 | Encoders         | ❌ Not started |
 | Resampling       | ❌ Not started |
 | Effects          | ❌ Not started |
 | Tagging          | ❌ Not started |
 | Windows Platform | ❌ Not started |
-| macOS Platform   | ❌ Not started |
+| macOS Platform   | 🕒 In progress |
 | iOS Platform     | ❌ Not started |
 | Android Platform | ❌ Not started |
 
