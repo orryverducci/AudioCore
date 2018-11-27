@@ -7,14 +7,14 @@ using AudioCore.Output;
 
 namespace AudioCore.Mac.Output
 {
-    public class AudioToolboxOutput : AudioOutput
+    public class CoreAudioOutput : AudioOutput
     {
         #region Private Fields
         AudioUnit.AudioUnit audioUnit;
         #endregion
 
         #region Constructor and Destructor
-        public AudioToolboxOutput(int channels, int sampleRate, int bitDepth)
+        public CoreAudioOutput(int channels, int sampleRate, int bitDepth)
         {
             // Set the audio format properties
             SampleRate = sampleRate;
@@ -51,7 +51,7 @@ namespace AudioCore.Mac.Output
             audioUnit.Initialize();
         }
 
-        ~AudioToolboxOutput()
+        ~CoreAudioOutput()
         {
             audioUnit.Dispose();
         }
