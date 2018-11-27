@@ -126,7 +126,7 @@ namespace AudioCore.Output
         /// Gets the current playback state
         /// </summary>
         /// <value>Whether the audio output is playing or not</value>
-        public PlaybackState PlaybackState { get; protected set; }
+        public PlaybackState PlaybackState { get; protected set; } = PlaybackState.STOPPED;
         #endregion
 
         #region Methods
