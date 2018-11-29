@@ -25,7 +25,7 @@ namespace AudioCore.Mac.Output
             // Check an audio component was returned
             if (audioOutputComponent == null)
             {
-                throw new Exception("Unable to setup audio component");
+                throw new Exception("Unable to setup audio component.");
             }
             // Create the output audio unit
             audioUnit = new AudioUnit.AudioUnit(audioOutputComponent);
@@ -45,7 +45,7 @@ namespace AudioCore.Mac.Output
             // Set render callback, and check there's no error
             if (audioUnit.SetRenderCallback(RenderAudio, AudioUnitScopeType.Input, 0) != AudioUnitStatus.NoError)
             {
-                throw new Exception("Unable to setup audio output render callback");
+                throw new Exception("Unable to setup audio output render callback.");
             }
             // Initialise audio unit
             audioUnit.Initialize();

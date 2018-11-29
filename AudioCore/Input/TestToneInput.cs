@@ -43,7 +43,7 @@ namespace AudioCore.Input
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The frequency must be greater than 0");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The frequency must be greater than 0.");
                 }
                 _frequency = value;
             }

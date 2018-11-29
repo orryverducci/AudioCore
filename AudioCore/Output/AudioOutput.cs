@@ -50,7 +50,7 @@ namespace AudioCore.Output
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The number of audio channels must be greater than 0");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The number of audio channels must be greater than 0.");
                 }
                 _channels = value;
             }
@@ -70,7 +70,7 @@ namespace AudioCore.Output
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The sample rate must be greater than 0");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The sample rate must be greater than 0.");
                 }
                 _sampleRate = value;
             }
@@ -90,7 +90,7 @@ namespace AudioCore.Output
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The latency must be greater than 0");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The latency must be greater than 0.");
                 }
                 _latency = value;
             }
@@ -111,11 +111,11 @@ namespace AudioCore.Output
                 // Check value is between 8 and 64 bits and a multiple of 8
                 if (value < 8 || value > 64)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "Bit depth must be between 8 bit and 64 bit");
+                    throw new ArgumentOutOfRangeException(nameof(value), "Bit depth must be between 8 bit and 64 bit.");
                 }
                 else if (value % 8 > 0)
                 {
-                    throw new ArgumentException("Bit depth must a multiple of 8", nameof(value));
+                    throw new ArgumentException("Bit depth must a multiple of 8.", nameof(value));
                 }
                 // Set value
                 _bitDepth = value;
@@ -139,11 +139,11 @@ namespace AudioCore.Output
             // Check the input audio properties matches the audio properties of the output
             if (input.Channels != Channels)
             {
-                throw new ArgumentException("The number of input channels does not match the number of output channels", nameof(input));
+                throw new ArgumentException("The number of input channels does not match the number of output channels.", nameof(input));
             }
             else if (input.SampleRate != SampleRate)
             {
-                throw new ArgumentException("The input sample rate does not match the output sample rate", nameof(input));
+                throw new ArgumentException("The input sample rate does not match the output sample rate.", nameof(input));
             }
             // Add the input to the list of inputs
             _audioInputs.Add(input);
@@ -162,7 +162,7 @@ namespace AudioCore.Output
             }
             else
             {
-                throw new ArgumentException("The input hasn't been added to this output", nameof(input));
+                throw new ArgumentException("The input hasn't been added to this output.", nameof(input));
             }
         }
 
@@ -171,7 +171,7 @@ namespace AudioCore.Output
         /// </summary>
         public virtual void Start()
         {
-            throw new NotImplementedException("The Start method has not been implemented for this audio output");
+            throw new NotImplementedException("The Start method has not been implemented for this audio output.");
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace AudioCore.Output
         /// </summary>
         public virtual void Stop()
         {
-            throw new NotImplementedException("The Stop method has not been implemented for this audio output");
+            throw new NotImplementedException("The Stop method has not been implemented for this audio output.");
         }
 
         /// <summary>

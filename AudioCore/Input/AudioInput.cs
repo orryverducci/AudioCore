@@ -38,7 +38,7 @@ namespace AudioCore.Input
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The number of audio channels must be greater than 0");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The number of audio channels must be greater than 0.");
                 }
                 _channels = value;
             }
@@ -57,7 +57,7 @@ namespace AudioCore.Input
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The sample rate must be greater than 0");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The sample rate must be greater than 0.");
                 }
                 _sampleRate = value;
             }
@@ -76,7 +76,7 @@ namespace AudioCore.Input
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The latency must be greater than 0");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The latency must be greater than 0.");
                 }
                 _latency = value;
             }
@@ -97,7 +97,7 @@ namespace AudioCore.Input
         /// <param name="framesRequested">The number of frames required</param>
         public virtual async Task<double[]> GetFrames(int framesRequested)
         {
-            throw new NotImplementedException("The GetFrames method has not been implemented for this audio input");
+            throw new NotImplementedException("The GetFrames method has not been implemented for this audio input.");
         }
         #endregion
     }
