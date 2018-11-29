@@ -174,6 +174,88 @@ namespace AudioCore.Converters
             // Return converted samples
             return convertedSamples;
         }
+
+        /// <summary>
+        /// Convert the 16 bit <paramref name="samples"/> to 64 bit floating-point samples.
+        /// </summary>
+        /// <returns>The converted samples.</returns>
+        /// <param name="samples">The samples to convert.</param>
+        public static double[] From16Bit(short[] samples)
+        {
+            // Create an array of doubles big enough to hold all the samples
+            double[] convertedSamples = new double[samples.Length];
+            // Convert each sample to a double
+            for (int i = 0; i < convertedSamples.Length; i++)
+            {
+                // Save sample as a double
+                convertedSamples[i] = samples[i];
+                // Convert sample to floating-point scale
+                convertedSamples[i] /= short.MaxValue;
+            }
+            // Return converted samples
+            return convertedSamples;
+        }
+
+        /// <summary>
+        /// Convert the 32 bit <paramref name="samples"/> to 64 bit floating-point samples.
+        /// </summary>
+        /// <returns>The converted samples.</returns>
+        /// <param name="samples">The samples to convert.</param>
+        public static double[] From32Bit(int[] samples)
+        {
+            // Create an array of doubles big enough to hold all the samples
+            double[] convertedSamples = new double[samples.Length];
+            // Convert each sample to a double
+            for (int i = 0; i < convertedSamples.Length; i++)
+            {
+                // Save sample as a double
+                convertedSamples[i] = samples[i];
+                // Convert sample to floating-point scale
+                convertedSamples[i] /= int.MaxValue;
+            }
+            // Return converted samples
+            return convertedSamples;
+        }
+
+        /// <summary>
+        /// Convert the 64 bit integer <paramref name="samples"/> to 64 bit floating-point samples.
+        /// </summary>
+        /// <returns>The converted samples.</returns>
+        /// <param name="samples">The samples to convert.</param>
+        public static double[] From64Bit(long[] samples)
+        {
+            // Create an array of doubles big enough to hold all the samples
+            double[] convertedSamples = new double[samples.Length];
+            // Convert each sample to a double
+            for (int i = 0; i < convertedSamples.Length; i++)
+            {
+                // Save sample as a double
+                convertedSamples[i] = samples[i];
+                // Convert sample to floating-point scale
+                convertedSamples[i] /= long.MaxValue;
+            }
+            // Return converted samples
+            return convertedSamples;
+        }
+
+        /// <summary>
+        /// Convert the 32 bit floating-point <paramref name="samples"/> to 64 bit floating-point samples.
+        /// </summary>
+        /// <returns>The converted samples.</returns>
+        /// <param name="samples">The samples to convert.</param>
+        public static double[] FromFloat(float[] samples)
+        {
+            // Create an array of doubles big enough to hold all the samples
+            double[] convertedSamples = new double[samples.Length];
+            // Convert each sample to a double
+            for (int i = 0; i < convertedSamples.Length; i++)
+            {
+                // Save sample as a double
+                convertedSamples[i] = samples[i];
+            }
+            // Return converted samples
+            return convertedSamples;
+        }
         #endregion
     }
 }
