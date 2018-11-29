@@ -155,7 +155,7 @@ namespace AudioCore.Converters
 
         #region Convert From Methods
         /// <summary>
-        /// Convert the 8 bit samples <paramref name="samples"/> to 64 bit floating-point samples.
+        /// Convert the 8 bit <paramref name="samples"/> to 64 bit floating-point samples.
         /// </summary>
         /// <returns>The converted samples.</returns>
         /// <param name="samples">The samples to convert.</param>
