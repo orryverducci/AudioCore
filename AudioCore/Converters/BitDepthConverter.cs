@@ -169,7 +169,7 @@ namespace AudioCore.Converters
                 // Save sample as a double
                 convertedSamples[i] = samples[i];
                 // Convert sample to floating-point scale
-                convertedSamples[i] *= sbyte.MaxValue;
+                convertedSamples[i] /= sbyte.MaxValue;
             }
             // Return converted samples
             return convertedSamples;
