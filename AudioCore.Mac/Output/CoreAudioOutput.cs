@@ -14,12 +14,12 @@ namespace AudioCore.Mac.Output
         #endregion
 
         #region Constructor and Dispose
-        public CoreAudioOutput(int channels, int sampleRate, int bitDepth)
+        public CoreAudioOutput(int channels, int sampleRate)
         {
             // Set the audio format properties
             SampleRate = sampleRate;
             Channels = channels;
-            BitDepth = bitDepth;
+            BitDepth = 32;
             // Get the default output audio component
             AudioComponent audioOutputComponent = AudioComponent.FindComponent(AudioTypeOutput.Default);
             // Check an audio component was returned
@@ -34,12 +34,12 @@ namespace AudioCore.Mac.Output
             {
                 SampleRate = SampleRate,
                 Format = AudioFormatType.LinearPCM,
-                FormatFlags = AudioFormatFlags.IsSignedInteger | AudioFormatFlags.IsPacked,
-                BytesPerPacket = (BitDepth / 8) * Channels,
+                FormatFlags = AudioFormatFlags.IsFloat | AudioFormatFlags.IsPacked,
+                BytesPerPacket = 4 * Channels,
                 FramesPerPacket = 1,
-                BytesPerFrame = (BitDepth / 8) * Channels,
+                BytesPerFrame = 4 * Channels,
                 ChannelsPerFrame = Channels,
-                BitsPerChannel = BitDepth
+                BitsPerChannel = 32
             };
             audioUnit.SetFormat(streamFormat, AudioUnitScopeType.Input, 0);
             // Set render callback, and check there's no error
@@ -85,13 +85,13 @@ namespace AudioCore.Mac.Output
         {
             // Get frames to be output
             double[] frames = GetInputFrames((int)framesRequired).Result;
-            // Convert frames to 16 bit integer
-            short[] convertedFrames = BitDepthConverter.To16Bit(frames);
+            // Convert frames to floats
+            float[] convertedFrames = BitDepthConverter.ToFloat(frames);
             // Output the audio
             unsafe
             {
                 // Get pointer to the output audio buffer
-                short* outputPointer = (short*)buffers[0].Data.ToPointer();
+                float* outputPointer = (float*)buffers[0].Data.ToPointer();
                 // Add each frame to the output audio buffers
                 for (int i = 0; i < convertedFrames.Length; i++)
                 {
