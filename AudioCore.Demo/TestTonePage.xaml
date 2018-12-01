@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:AudioCore.Demo" x:Class="AudioCore.Demo.TestTonePage" Title="Test Tone Input" Padding="20">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:AudioCore.Demo" x:Class="AudioCore.Demo.TestTonePage" NavigationPage.HasNavigationBar="false" Title="Test Tone Input" Padding="20">
     <FlexLayout Direction="Column" AlignItems="Start" JustifyContent="Start">
         <Button x:Name="playbackButton" Text="Play" Clicked="PlaybackButtonClicked" />
     </FlexLayout>

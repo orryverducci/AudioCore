@@ -18,7 +18,6 @@ namespace AudioCore.Demo.Mac
             window = new NSWindow(rect, style, NSBackingStore.Buffered, false);
 			window.Center();
             window.Title = "AudioCore Demo";
-            window.TitleVisibility = NSWindowTitleVisibility.Hidden;
         }
 
         public override NSWindow MainWindow
