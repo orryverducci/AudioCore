@@ -89,6 +89,15 @@ namespace AudioCore.Mac.Output
             audioUnit.Initialize();
         }
 
+        /// <summary>
+        /// Releases all resource used by the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> object.
+        /// </summary>
+        /// <remarks>Call <see cref="Dispose"/> when you are finished using the
+        /// <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/>. The <see cref="Dispose"/> method leaves the
+        /// <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> in an unusable state. After calling
+        /// <see cref="Dispose"/>, you must release all references to the
+        /// <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> so the garbage collector can reclaim the memory that
+        /// the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> was occupying.</remarks>
         public void Dispose()
         {
             audioUnit.Dispose();
