@@ -7,17 +7,35 @@ using AudioCore.Output;
 
 namespace AudioCore.Mac.Output
 {
+    /// <summary>
+    /// Provides audio output on macOS via the Core Audio API.
+    /// </summary>
     public class CoreAudioOutput : AudioOutput, IDisposable
     {
         #region Private Fields
+        /// <summary>
+        /// The output audio unit.
+        /// </summary>
         AudioUnit.AudioUnit audioUnit;
         #endregion
 
         #region Constructor and Dispose
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system sample rate and audio channels.
+        /// </summary>
         public CoreAudioOutput() : this(-1, -1) { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system sample rate.
+        /// </summary>
+        /// <param name="channels">The number of audio channels.</param>
         public CoreAudioOutput(int channels) : this(channels, -1) { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class.
+        /// </summary>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <param name="sampleRate">The audio sample rate in Hertz.</param>
         public CoreAudioOutput(int channels, int sampleRate)
         {
             // Get the default output audio component
@@ -101,6 +119,15 @@ namespace AudioCore.Mac.Output
             }
         }
 
+        /// <summary>
+        /// Callback which provides the requested audio samples to the output audio unit.
+        /// </summary>
+        /// <returns>The audio.</returns>
+        /// <param name="actionFlags">The configuration flags for the audio unit.</param>
+        /// <param name="timeStamp">The audio time stamp.</param>
+        /// <param name="busNumber">The bus number.</param>
+        /// <param name="framesRequired">The number of audio frames required.</param>
+        /// <param name="buffers">The output audio buffer.</param>
         private AudioUnitStatus RenderAudio(AudioUnitRenderActionFlags actionFlags, AudioTimeStamp timeStamp, uint busNumber, uint framesRequired, AudioBuffers buffers)
         {
             // Get frames to be output
