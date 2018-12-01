@@ -11,26 +11,26 @@ namespace AudioCore.Input
     {
         #region Private Fields
         /// <summary>
-        /// The number of audio channels
+        /// The number of audio channels.
         /// </summary>
         private int _channels;
 
         /// <summary>
-        /// The audio sample rate in Hertz
+        /// The audio sample rate in Hertz.
         /// </summary>
         private int _sampleRate;
 
         /// <summary>
-        /// The latency on the audio in milliseconds
+        /// The latency on the audio in milliseconds.
         /// </summary>
         private int _latency;
         #endregion
 
         #region Properties
         /// <summary>
-        /// Gets the number of audio channels
+        /// Gets the number of audio channels.
         /// </summary>
-        /// <value>The number of audio channels</value>
+        /// <value>The number of audio channels.</value>
         public int Channels
         {
             get
@@ -50,7 +50,7 @@ namespace AudioCore.Input
         /// <summary>
         /// Gets the audio sample rate in Hertz
         /// </summary>
-        /// <value>The audio sample rate in Hertz</value>
+        /// <value>The audio sample rate in Hertz.</value>
         public int SampleRate {
             get
             {
@@ -67,9 +67,9 @@ namespace AudioCore.Input
         }
 
         /// <summary>
-        /// Gets the latency on the audio in milliseconds
+        /// Gets the latency on the audio in milliseconds.
         /// </summary>
-        /// <value>The audio latency</value>
+        /// <value>The audio latency.</value>
         public int Latency {
             get
             {
@@ -86,18 +86,18 @@ namespace AudioCore.Input
         }
 
         /// <summary>
-        /// Gets the current playback state
+        /// Gets the current playback state.
         /// </summary>
-        /// <value>Whether the audio input is playing or not</value>
+        /// <value>Whether the audio input is playing or not.</value>
         public PlaybackState PlaybackState { get; protected set; } = PlaybackState.STOPPED;
         #endregion
 
         #region Methods
         /// <summary>
-        /// Get frames of audio samples from the input
+        /// Get frames of audio samples from the input.
         /// </summary>
-        /// <returns>The audio samples</returns>
-        /// <param name="framesRequested">The number of frames required</param>
+        /// <returns>The audio samples.</returns>
+        /// <param name="framesRequested">The number of frames required.</param>
         public virtual async Task<double[]> GetFrames(int framesRequested)
         {
             throw new NotImplementedException("The GetFrames method has not been implemented for this audio input.");

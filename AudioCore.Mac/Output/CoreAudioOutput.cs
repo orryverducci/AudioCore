@@ -96,7 +96,7 @@ namespace AudioCore.Mac.Output
         #endregion
 
         /// <summary>
-        /// Start playback from the audio output
+        /// Start playback from the audio output.
         /// </summary>
         public override void Start()
         {
@@ -108,7 +108,7 @@ namespace AudioCore.Mac.Output
         }
 
         /// <summary>
-        /// Stop playback from the audio output
+        /// Stop playback from the audio output.
         /// </summary>
         public override void Stop()
         {

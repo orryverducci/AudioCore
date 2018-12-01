@@ -13,36 +13,36 @@ namespace AudioCore.Output
     {
         #region Private Fields
         /// <summary>
-        /// The number of audio channels
+        /// The number of audio channels.
         /// </summary>
         private int _channels;
 
         /// <summary>
-        /// The audio sample rate in Hertz
+        /// The audio sample rate in Hertz.
         /// </summary>
         private int _sampleRate;
 
         /// <summary>
-        /// The latency on the audio in milliseconds
+        /// The latency on the audio in milliseconds.
         /// </summary>
         private int _latency;
 
         /// <summary>
-        /// The audio output bit depth
+        /// The audio output bit depth.
         /// </summary>
         private int _bitDepth;
 
         /// <summary>
-        /// The audio inputs
+        /// The audio inputs.
         /// </summary>
         private List<AudioInput> _audioInputs = new List<AudioInput>();
         #endregion
 
         #region Properties
         /// <summary>
-        /// Gets the number of audio channels
+        /// Gets the number of audio channels.
         /// </summary>
-        /// <value>The number of audio channels</value>
+        /// <value>The number of audio channels.</value>
         public int Channels
         {
             get
@@ -60,9 +60,9 @@ namespace AudioCore.Output
         }
 
         /// <summary>
-        /// Gets the audio sample rate in Hertz
+        /// Gets the audio sample rate in Hertz.
         /// </summary>
-        /// <value>The audio sample rate in Hertz</value>
+        /// <value>The audio sample rate in Hertz.</value>
         public int SampleRate
         {
             get
@@ -80,9 +80,9 @@ namespace AudioCore.Output
         }
 
         /// <summary>
-        /// Gets the latency on the audio in milliseconds
+        /// Gets the latency on the audio in milliseconds.
         /// </summary>
-        /// <value>The audio latency</value>
+        /// <value>The audio latency.</value>
         public int Latency
         {
             get
@@ -100,9 +100,9 @@ namespace AudioCore.Output
         }
 
         /// <summary>
-        /// Gets the audio output bit depth
+        /// Gets the audio output bit depth.
         /// </summary>
-        /// <value>The audio output bit depth</value>
+        /// <value>The audio output bit depth.</value>
         public int BitDepth
         {
             get
@@ -126,17 +126,17 @@ namespace AudioCore.Output
         }
 
         /// <summary>
-        /// Gets the current playback state
+        /// Gets the current playback state.
         /// </summary>
-        /// <value>Whether the audio output is playing or not</value>
+        /// <value>Whether the audio output is playing or not.</value>
         public PlaybackState PlaybackState { get; protected set; } = PlaybackState.STOPPED;
         #endregion
 
         #region Methods
         /// <summary>
-        /// Add an audio input to the output
+        /// Add an audio input to the output.
         /// </summary>
-        /// <param name="input">The audio input to be added</param>
+        /// <param name="input">The audio input to be added.</param>
         public void AddInput(AudioInput input)
         {
             // Check the input audio properties matches the audio properties of the output
@@ -153,9 +153,9 @@ namespace AudioCore.Output
         }
 
         /// <summary>
-        /// Remove an audio input from the output
+        /// Remove an audio input from the output.
         /// </summary>
-        /// <param name="input">The audio input to be removed</param>
+        /// <param name="input">The audio input to be removed.</param>
         public void RemoveInput(AudioInput input)
         {
             // Check the given input is on the list of inputs, and remove it if it is
@@ -170,7 +170,7 @@ namespace AudioCore.Output
         }
 
         /// <summary>
-        /// Start playback from the audio output
+        /// Start playback from the audio output.
         /// </summary>
         public virtual void Start()
         {
@@ -178,7 +178,7 @@ namespace AudioCore.Output
         }
 
         /// <summary>
-        /// Stop playback from the audio output
+        /// Stop playback from the audio output.
         /// </summary>
         public virtual void Stop()
         {
@@ -186,9 +186,9 @@ namespace AudioCore.Output
         }
 
         /// <summary>
-        /// Get frames of audio from the audio inputs
+        /// Get frames of audio from the audio inputs.
         /// </summary>
-        /// <param name="framesRequired">The number of frames required</param>
+        /// <param name="framesRequired">The number of frames required.</param>
         protected async Task<double[]> GetInputFrames(int framesRequired)
         {
             // Create array of mixed (combined) frames
