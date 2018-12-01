@@ -4,6 +4,9 @@ using AudioCore.Common;
 
 namespace AudioCore.Input
 {
+    /// <summary>
+    /// Provides an audio input.
+    /// </summary>
     public class AudioInput
     {
         #region Private Fields

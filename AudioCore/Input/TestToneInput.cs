@@ -4,6 +4,9 @@ using AudioCore.Common;
 
 namespace AudioCore.Input
 {
+    /// <summary>
+    /// Provides an audio input generated from a continuous sine wave test tone.
+    /// </summary>
     public class TestToneInput : AudioInput
     {
         #region Private Fields

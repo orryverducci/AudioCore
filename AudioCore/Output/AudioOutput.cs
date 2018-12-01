@@ -6,6 +6,9 @@ using AudioCore.Input;
 
 namespace AudioCore.Output
 {
+    /// <summary>
+    /// Provides an audio output.
+    /// </summary>
     public class AudioOutput
     {
         #region Private Fields

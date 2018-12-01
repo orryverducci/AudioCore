@@ -2,6 +2,9 @@
 
 namespace AudioCore.Converters
 {
+    /// <summary>
+    /// Provides methods to convert samples to various bit depths, and to convert them back.
+    /// </summary>
     public static class BitDepthConverter
     {
         #region Convert To Methods
