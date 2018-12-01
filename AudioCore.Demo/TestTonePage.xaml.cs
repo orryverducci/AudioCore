@@ -9,7 +9,7 @@ namespace AudioCore.Demo
     public partial class TestTonePage : ContentPage
     {
         private TestToneInput testToneInput = new TestToneInput(2, 44100);
-        private CoreAudioOutput output = new CoreAudioOutput(2, 44100);
+        private PlatformOutput output = new PlatformOutput();
 
         public TestTonePage()
         {
