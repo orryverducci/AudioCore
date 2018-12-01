@@ -115,7 +115,7 @@ namespace AudioCore.Input
         /// </summary>
         /// <returns>The test tone audio frames.</returns>
         /// <param name="framesRequested">The number of frames required.</param>
-        public override async Task<double[]> GetFrames(int framesRequested)
+        public override double[] GetFrames(int framesRequested)
         {
             // Create array of samples
             double[] audio = new double[framesRequested * Channels];

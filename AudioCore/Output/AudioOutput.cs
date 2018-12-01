@@ -189,7 +189,7 @@ namespace AudioCore.Output
         /// Get frames of audio from the audio inputs.
         /// </summary>
         /// <param name="framesRequired">The number of frames required.</param>
-        protected async Task<double[]> GetInputFrames(int framesRequired)
+        protected double[] GetInputFrames(int framesRequired)
         {
             // Create array of mixed (combined) frames
             double[] mixedFrames = new double[framesRequired * Channels];
@@ -200,7 +200,7 @@ namespace AudioCore.Output
                 if (input.PlaybackState == PlaybackState.PLAYING)
                 {
                     // Get frames from the audio input
-                    double[] inputFrames = await input.GetFrames(framesRequired);
+                    double[] inputFrames = input.GetFrames(framesRequired);
                     // Get the shorter length from the returned frames array or the mixed frames array
                     int mixLength = (inputFrames.Length < mixedFrames.Length) ? inputFrames.Length : mixedFrames.Length;
                     // Add the frames from the audio input to the mixed frames

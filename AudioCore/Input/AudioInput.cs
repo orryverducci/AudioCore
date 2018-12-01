@@ -98,7 +98,7 @@ namespace AudioCore.Input
         /// </summary>
         /// <returns>The audio samples.</returns>
         /// <param name="framesRequested">The number of frames required.</param>
-        public virtual async Task<double[]> GetFrames(int framesRequested)
+        public virtual double[] GetFrames(int framesRequested)
         {
             throw new NotImplementedException("The GetFrames method has not been implemented for this audio input.");
         }
