@@ -14,12 +14,12 @@ namespace AudioCore.Mac.Output
         #endregion
 
         #region Constructor and Dispose
+        public CoreAudioOutput() : this(-1, -1) { }
+
+        public CoreAudioOutput(int channels) : this(channels, -1) { }
+
         public CoreAudioOutput(int channels, int sampleRate)
         {
-            // Set the audio format properties
-            SampleRate = sampleRate;
-            Channels = channels;
-            BitDepth = 32;
             // Get the default output audio component
             AudioComponent audioOutputComponent = AudioComponent.FindComponent(AudioTypeOutput.Default);
             // Check an audio component was returned
@@ -29,6 +29,26 @@ namespace AudioCore.Mac.Output
             }
             // Create the output audio unit
             audioUnit = new AudioUnit.AudioUnit(audioOutputComponent);
+            // Get the output format for use if any of the arguments are set to the -1 default value
+            AudioStreamBasicDescription outputFormat = audioUnit.GetAudioFormat(AudioUnitScopeType.Output);
+            // Set the audio format properties
+            if (sampleRate != -1)
+            {
+                SampleRate = sampleRate;
+            }
+            else
+            {
+                SampleRate = (int)outputFormat.SampleRate;
+            }
+            if (channels != -1)
+            {
+                Channels = channels;
+            }
+            else
+            {
+                Channels = (int)outputFormat.ChannelsPerFrame;
+            }
+            BitDepth = 32;
             // Set stream format
             AudioStreamBasicDescription streamFormat = new AudioStreamBasicDescription
             {
