@@ -65,7 +65,7 @@ namespace AudioCore.Input
             {
                 _volumeDBFS = value;
                 // Calculate linear volume (between 0 and 1) from dBFS value
-                _volumeLinear = Math.Pow(10, Volume / 20);
+                _volumeLinear = Math.Pow(10, value / 20d);
             }
         }
         #endregion
