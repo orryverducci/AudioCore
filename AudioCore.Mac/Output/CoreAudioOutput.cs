@@ -23,13 +23,13 @@ namespace AudioCore.Mac.Output
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system sample rate and audio channels.
         /// </summary>
-        public CoreAudioOutput() : this(-1, -1) { }
+        public CoreAudioOutput() : this(-1, -1) {}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system sample rate.
         /// </summary>
         /// <param name="channels">The number of audio channels.</param>
-        public CoreAudioOutput(int channels) : this(channels, -1) { }
+        public CoreAudioOutput(int channels) : this(channels, -1) {}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class.
