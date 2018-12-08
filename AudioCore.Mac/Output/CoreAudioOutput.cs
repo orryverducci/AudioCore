@@ -104,6 +104,7 @@ namespace AudioCore.Mac.Output
         }
         #endregion
 
+        #region Playback Methods
         /// <summary>
         /// Start playback from the audio output.
         /// </summary>
@@ -127,7 +128,9 @@ namespace AudioCore.Mac.Output
                 PlaybackState = PlaybackState.STOPPED;
             }
         }
+        #endregion
 
+        #region Render Callback
         /// <summary>
         /// Callback which provides the requested audio samples to the output audio unit.
         /// </summary>
@@ -157,5 +160,6 @@ namespace AudioCore.Mac.Output
             // Return that there was no error
             return AudioUnitStatus.NoError;
         }
+        #endregion
     }
 }
