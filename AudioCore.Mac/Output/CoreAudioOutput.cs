@@ -87,6 +87,8 @@ namespace AudioCore.Mac.Output
             }
             // Initialise audio unit
             audioUnit.Initialize();
+            // Set the output buffer size
+            BufferSize = (int)audioUnit.GetBufferFrames();
         }
 
         /// <summary>
