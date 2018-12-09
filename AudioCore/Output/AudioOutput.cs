@@ -22,9 +22,9 @@ namespace AudioCore.Output
         private int _sampleRate;
 
         /// <summary>
-        /// The latency on the audio in milliseconds.
+        /// The number of audio frames the output is buffering by.
         /// </summary>
-        private int _latency;
+        private int _bufferSize;
 
         /// <summary>
         /// The audio output bit depth.
@@ -79,22 +79,22 @@ namespace AudioCore.Output
         }
 
         /// <summary>
-        /// Gets the latency on the audio in milliseconds.
+        /// Gets the number of audio frames the output is buffering by.
         /// </summary>
-        /// <value>The audio latency.</value>
-        public int Latency
+        /// <value>The output buffer size.</value>
+        public int BufferSize
         {
             get
             {
-                return _latency;
+                return _bufferSize;
             }
             protected set
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The latency must be greater than 0.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The buffer size must be 0 or greater.");
                 }
-                _latency = value;
+                _bufferSize = value;
             }
         }
 
