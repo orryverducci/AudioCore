@@ -110,14 +110,15 @@ namespace AudioCore.Output
             }
             protected set
             {
-                // Check value is between 8 and 64 bits and a multiple of 8
+                // Check value is between 8 and 64 bits
                 if (value < 8 || value > 64)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value), "Bit depth must be between 8 bit and 64 bit.");
                 }
-                else if (value % 8 > 0)
+                // Check value is a multiple of 2 (i.e. full bytes), or 24 bits which is also valid
+                if ((value & (value - 1)) != 0)
                 {
-                    throw new ArgumentException("Bit depth must a multiple of 8.", nameof(value));
+                    throw new ArgumentException("Bit depth must be a power of 2, or 24 bit.", nameof(value));
                 }
                 // Set value
                 _bitDepth = value;
