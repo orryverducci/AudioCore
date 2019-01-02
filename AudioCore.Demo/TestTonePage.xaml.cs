@@ -80,7 +80,11 @@ namespace AudioCore.Demo
                 // Conver the linear volume (between 0 and 1) to dBFS
                 int dbfsVolume = (int)(Math.Log10(volumeSlider.Value) * 20);
                 // Create the test tone input using the specified frequency and volume, using the output sample rate and channel count
-                _testToneInput = new TestToneInput(_output.Channels, _output.SampleRate, (int)frequencySlider.Value, dbfsVolume);
+                _testToneInput = new TestToneInput(_output.Channels, _output.SampleRate)
+                {
+                    Frequency = (int)frequencySlider.Value,
+                    Volume = dbfsVolume
+                };
                 // Add the test tone input to the output
                 _output.AddInput(_testToneInput);
                 // Start playback

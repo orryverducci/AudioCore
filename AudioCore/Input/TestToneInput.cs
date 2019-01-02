@@ -12,7 +12,7 @@ namespace AudioCore.Input
         /// <summary>
         /// The frequency of the test tone in Hertz.
         /// </summary>
-        private int _frequency;
+        private int _frequency = 1000;
 
         /// <summary>
         /// The number of the current frame in the sine wave.
@@ -32,7 +32,7 @@ namespace AudioCore.Input
 
         #region Properties
         /// <summary>
-        /// Gets the frequency of the test tone in Hertz.
+        /// Gets or sets the frequency of the test tone in Hertz.
         /// </summary>
         /// <value>The frequency of the test tone in Hertz.</value>
         public int Frequency
@@ -41,7 +41,7 @@ namespace AudioCore.Input
             {
                 return _frequency;
             }
-            private set
+            set
             {
                 if (value < 0)
                 {
@@ -52,7 +52,7 @@ namespace AudioCore.Input
         }
 
         /// <summary>
-        /// Gets the volume of the test tone in dBFS.
+        /// Gets or sets the volume of the test tone in dBFS.
         /// </summary>
         /// <value>The volume of the test tone in dBFS.</value>
         public int Volume
@@ -61,7 +61,7 @@ namespace AudioCore.Input
             {
                 return _volumeDBFS;
             }
-            private set
+            set
             {
                 _volumeDBFS = value;
                 // Calculate linear volume (between 0 and 1) from dBFS value
@@ -73,36 +73,14 @@ namespace AudioCore.Input
         #region Constructor
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Foundation.TestToneInput"/> class.
-        /// Generates a continuous 1kHz sine wave test tone at full volume.
         /// </summary>
         /// <param name="channels">The number of audio channels required.</param>
         /// <param name="sampleRate">The audio sample rate required in Hertz.</param>
-        public TestToneInput(int channels, int sampleRate) : this(channels, sampleRate, 1000, 0) {}
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:AudioCore.Foundation.TestToneInput"/> class.
-        /// Generates a continuous 1kHz sine wave test tone at the requested volume.
-        /// </summary>
-        /// <param name="channels">The number of audio channels required.</param>
-        /// <param name="sampleRate">The audio sample rate required in Hertz.</param>
-        /// <param name="volume">The audio output volume in dBFS.</param>
-        public TestToneInput(int channels, int sampleRate, int volume) : this(channels, sampleRate, 1000, volume) {}
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:AudioCore.Foundation.TestToneInput"/> class.
-        /// Generates a continuous sine wave test tone at the requested frequency and volume.
-        /// </summary>
-        /// <param name="channels">The number of audio channels required.</param>
-        /// <param name="sampleRate">The audio sample rate required in Hertz.</param>
-        /// <param name="frequency">The frequency of the tone required in Hertz.</param>
-        /// <param name="volume">The audio output volume in dBFS.</param>
-        public TestToneInput(int channels, int sampleRate, int frequency, int volume)
+        public TestToneInput(int channels, int sampleRate)
         {
             // Set properties
             Channels = channels;
             SampleRate = sampleRate;
-            Frequency = frequency;
-            Volume = volume;
             // Set playback state as playing
             PlaybackState = PlaybackState.PLAYING;
         }
