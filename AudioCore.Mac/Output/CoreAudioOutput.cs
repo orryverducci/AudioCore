@@ -146,13 +146,13 @@ namespace AudioCore.Mac.Output
         {
             // Get frames to be output
             double[] frames = GetInputFrames((int)framesRequired);
-            // Convert frames to floats
-            float[] convertedFrames = BitDepthConverter.ToFloat(frames);
+            // Convert frames to bytes
+            byte[] convertedFrames = BitDepthConverter.ToFloat(frames);
             // Output the audio
             unsafe
             {
                 // Get pointer to the output audio buffer
-                float* outputPointer = (float*)buffers[0].Data.ToPointer();
+                byte* outputPointer = (byte*)buffers[0].Data.ToPointer();
                 // Add each frame to the output audio buffers
                 for (int i = 0; i < convertedFrames.Length; i++)
                 {
