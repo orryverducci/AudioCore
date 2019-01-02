@@ -77,7 +77,7 @@ namespace AudioCore.Demo
             {
                 // Create the platform default audio output
                 _output = new PlatformOutput();
-                // Conver the linear volume (between 0 and 1) to dBFS
+                // Convert the linear volume (between 0 and 1) to dBFS
                 int dbfsVolume = (int)(Math.Log10(volumeSlider.Value) * 20);
                 // Create the test tone input using the specified frequency and volume, using the output sample rate and channel count
                 _testToneInput = new TestToneInput(_output.Channels, _output.SampleRate)
