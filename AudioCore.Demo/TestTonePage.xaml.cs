@@ -77,12 +77,30 @@ namespace AudioCore.Demo
             {
                 // Create the platform default audio output
                 _output = new PlatformOutput();
+                // Convert the selected type to the type enum
+                TestToneInput.ToneType type = TestToneInput.ToneType.SineWave;
+                switch (typePicker.Items[typePicker.SelectedIndex])
+                {
+                    case "Sine Wave":
+                        type = TestToneInput.ToneType.SineWave;
+                        break;
+                    case "Square Wave":
+                        type = TestToneInput.ToneType.SquareWave;
+                        break;
+                    case "Sawtooth Wave":
+                        type = TestToneInput.ToneType.SawtoothWave;
+                        break;
+                    case "Triangle Wave":
+                        type = TestToneInput.ToneType.TriangleWave;
+                        break;
+                }
                 // Convert the linear volume (between 0 and 1) to dBFS
                 int dbfsVolume = (int)(Math.Log10(volumeSlider.Value) * 20);
                 // Create the test tone input using the specified frequency and volume, using the output sample rate and channel count
                 _testToneInput = new TestToneInput(_output.Channels, _output.SampleRate)
                 {
                     Frequency = (int)frequencySlider.Value,
+                    Type = type,
                     Volume = dbfsVolume
                 };
                 // Add the test tone input to the output

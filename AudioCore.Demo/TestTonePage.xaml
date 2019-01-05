@@ -7,16 +7,29 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label Text="Frequency" Grid.Row="0" Grid.Column="0" />
-            <Slider x:Name="frequencySlider" Minimum="0" Maximum="10000" Value="1000" Grid.Row="0" Grid.Column="1" />
-            <Label BindingContext="{x:Reference frequencySlider}" Text="{Binding Value, StringFormat='{0:F0} Hz'}" HorizontalTextAlignment="End" Grid.Row="1" Grid.Column="1" />
-            <Label Text="Volume" Grid.Row="2" Grid.Column="0" />
-            <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Grid.Row="2" Grid.Column="1" />
+            <Label Text="Type" Grid.Row="0" Grid.Column="0" />
+            <Picker x:Name="typePicker" Grid.Row="0" Grid.Column="1">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Sine Wave</x:String>
+                        <x:String>Square Wave</x:String>
+                        <x:String>Sawtooth Wave</x:String>
+                        <x:String>Triangle Wave</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+            </Picker>
+            <Label Text="Frequency" Grid.Row="1" Grid.Column="0" />
+            <Slider x:Name="frequencySlider" Minimum="0" Maximum="10000" Value="1000" Grid.Row="1" Grid.Column="1" />
+            <Label BindingContext="{x:Reference frequencySlider}" Text="{Binding Value, StringFormat='{0:F0} Hz'}" HorizontalTextAlignment="End" Grid.Row="2" Grid.Column="1" />
+            <Label Text="Volume" Grid.Row="3" Grid.Column="0" />
+            <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Grid.Row="3" Grid.Column="1" />
         </Grid>
         <Button x:Name="playbackButton" Text="Play" Clicked="PlaybackButtonClicked" HorizontalOptions="Start" />
     </StackLayout>
