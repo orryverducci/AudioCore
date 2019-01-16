@@ -20,7 +20,22 @@ namespace AudioCore.Demo
         /// <summary>
         /// The current playback status, <c>true</c> if currently playing, otherwise <c>false</c>.
         /// </summary>
-        private bool _playing = false;
+        private bool _playing;
+
+        /// <summary>
+        /// The type of test tone.
+        /// </summary>
+        private TestToneInput.ToneType _toneType = TestToneInput.ToneType.SineWave;
+
+        /// <summary>
+        /// The test tone frequency.
+        /// </summary>
+        private int _frequency = 1000;
+
+        /// <summary>
+        /// The test tone volume.
+        /// </summary>
+        private int _volume;
         #endregion
 
         #region Constructor and Page Lifecycle Events
@@ -49,6 +64,62 @@ namespace AudioCore.Demo
         #endregion
 
         #region UI Methods
+        /// <summary>
+        /// Handles the test tone type being changed.
+        /// </summary>
+        /// <param name="sender">The sending object.</param>
+        /// <param name="e">The event arguments.</param>
+        private void ToneChanged(object sender, EventArgs e)
+        {
+            switch (typePicker.Items[typePicker.SelectedIndex])
+            {
+                default:
+                    _toneType = TestToneInput.ToneType.SineWave;
+                    break;
+                case "Square Wave":
+                    _toneType = TestToneInput.ToneType.SquareWave;
+                    break;
+                case "Sawtooth Wave":
+                    _toneType = TestToneInput.ToneType.SawtoothWave;
+                    break;
+                case "Triangle Wave":
+                    _toneType = TestToneInput.ToneType.TriangleWave;
+                    break;
+            }
+            if (_playing)
+            {
+                _testToneInput.Type = _toneType;
+            }
+        }
+
+        /// <summary>
+        /// Handles the frequency slider value being changed.
+        /// </summary>
+        /// <param name="sender">The sending object.</param>
+        /// <param name="e">The event arguments.</param>
+        private void FrequencyChanged(object sender, EventArgs e)
+        {
+            _frequency = (int)frequencySlider.Value;
+            if (_playing)
+            {
+                _testToneInput.Frequency = _frequency;
+            }
+        }
+
+        /// <summary>
+        /// Handles the volume slider value being changed.
+        /// </summary>
+        /// <param name="sender">The sending object.</param>
+        /// <param name="e">The event arguments.</param>
+        private void VolumeChanged(object sender, EventArgs e)
+        {
+            _volume = (int)(Math.Log10(volumeSlider.Value) * 20);
+            if (_playing)
+            {
+                _testToneInput.Volume = _volume;
+            }
+        }
+
         /// <summary>
         /// Handles the play/stop button being clicked or tapped.
         /// </summary>
@@ -79,41 +150,20 @@ namespace AudioCore.Demo
             {
                 // Create the platform default audio output
                 _output = new PlatformOutput();
-                // Convert the selected type to the type enum
-                TestToneInput.ToneType type = TestToneInput.ToneType.SineWave;
-                switch (typePicker.Items[typePicker.SelectedIndex])
-                {
-                    case "Sine Wave":
-                        type = TestToneInput.ToneType.SineWave;
-                        break;
-                    case "Square Wave":
-                        type = TestToneInput.ToneType.SquareWave;
-                        break;
-                    case "Sawtooth Wave":
-                        type = TestToneInput.ToneType.SawtoothWave;
-                        break;
-                    case "Triangle Wave":
-                        type = TestToneInput.ToneType.TriangleWave;
-                        break;
-                }
-                // Convert the linear volume (between 0 and 1) to dBFS
-                int dbfsVolume = (int)(Math.Log10(volumeSlider.Value) * 20);
                 // Create the test tone input using the specified frequency and volume, using the output sample rate and channel count
                 _testToneInput = new TestToneInput(_output.Channels, _output.SampleRate)
                 {
-                    Frequency = (int)frequencySlider.Value,
-                    Type = type,
-                    Volume = dbfsVolume
+                    Frequency = _frequency,
+                    Type = _toneType,
+                    Volume = _volume
                 };
                 // Add the test tone input to the output
                 _output.AddInput(_testToneInput);
                 // Start playback
                 _output.Start();
-                // Set to currently playing, changing the button text and disabling the UI sliders
+                // Set to currently playing, changing the button text
                 _playing = true;
                 playbackButton.Text = "Stop";
-                frequencySlider.IsEnabled = false;
-                volumeSlider.IsEnabled = false;
             }
             catch (Exception e) // If an error occurs
             {
@@ -141,11 +191,9 @@ namespace AudioCore.Demo
             // Release the output and test tone input
             _output = null;
             _testToneInput = null;
-            // Set to stopped, changing the button text and enabling the UI sliders
+            // Set to stopped, changing the button text
             _playing = false;
             playbackButton.Text = "Play";
-            frequencySlider.IsEnabled = true;
-            volumeSlider.IsEnabled = true;
         }
         #endregion
     }

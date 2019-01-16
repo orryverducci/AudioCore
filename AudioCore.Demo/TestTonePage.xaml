@@ -14,7 +14,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Text="Type" Grid.Row="0" Grid.Column="0" />
-            <Picker x:Name="typePicker" Grid.Row="0" Grid.Column="1">
+            <Picker x:Name="typePicker" Grid.Row="0" Grid.Column="1" SelectedIndexChanged="ToneChanged">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>Sine Wave</x:String>
@@ -26,10 +26,10 @@
                 <Picker.SelectedIndex>0</Picker.SelectedIndex>
             </Picker>
             <Label Text="Frequency" Grid.Row="1" Grid.Column="0" />
-            <Slider x:Name="frequencySlider" Minimum="0" Maximum="10000" Value="1000" Grid.Row="1" Grid.Column="1" />
+            <Slider x:Name="frequencySlider" Minimum="0" Maximum="10000" Value="1000" Grid.Row="1" Grid.Column="1" ValueChanged="FrequencyChanged" />
             <Label BindingContext="{x:Reference frequencySlider}" Text="{Binding Value, StringFormat='{0:F0} Hz'}" HorizontalTextAlignment="End" Grid.Row="2" Grid.Column="1" />
             <Label Text="Volume" Grid.Row="3" Grid.Column="0" />
-            <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Grid.Row="3" Grid.Column="1" />
+            <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Grid.Row="3" Grid.Column="1" ValueChanged="VolumeChanged" />
         </Grid>
         <Button x:Name="playbackButton" Text="Play" Clicked="PlaybackButtonClicked" HorizontalOptions="Start" />
     </StackLayout>
