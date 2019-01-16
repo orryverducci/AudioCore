@@ -11,10 +11,12 @@ namespace AudioCore.Demo
         /// The test tone input.
         /// </summary>
         private TestToneInput _testToneInput;
+
         /// <summary>
         /// The platform default audio output.
         /// </summary>
         private PlatformOutput _output;
+
         /// <summary>
         /// The current playback status, <c>true</c> if currently playing, otherwise <c>false</c>.
         /// </summary>
