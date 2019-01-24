@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AudioCore.Common;
 using AudioCore.Input;
 using AudioCore.Mac.Output;
@@ -18,9 +19,9 @@ namespace AudioCore.Demo
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Demo.PlatformOutput"/> class.
         /// </summary>
-        public PlatformOutput()
+        public PlatformOutput(long deviceID)
         {
-            coreAudioOutput = new CoreAudioOutput();
+            coreAudioOutput = new CoreAudioOutput(deviceID, -1, -1);
         }
 
         /// <summary>
@@ -95,6 +96,15 @@ namespace AudioCore.Demo
         public void Stop()
         {
             coreAudioOutput.Stop();
+        }
+
+        /// <summary>
+        /// Gets the available output audio devices.
+        /// </summary>
+        /// <returns>A list of <see cref="T:AudioCore.Common.AudioDevice"/> representing the available output devices.</returns>
+        public static List<AudioDevice> GetDevices()
+        {
+            return CoreAudioOutput.GetDevices();
         }
     }
 }

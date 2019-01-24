@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
+using AudioCore.Common;
 using AudioCore.Input;
 
 namespace AudioCore.Demo
@@ -47,6 +49,11 @@ namespace AudioCore.Demo
             InitializeComponent();
             // Set the event handler for the page disappearing event
             Disappearing += PageDisappearing;
+            // Populate the output device list and select the default device
+            List<AudioDevice> devices = PlatformOutput.GetDevices();
+            outputPicker.ItemsSource = devices;
+            outputPicker.ItemDisplayBinding = new Binding("Name");
+            outputPicker.SelectedItem = devices.Find(x => x.Default == true);
         }
 
         /// <summary>
@@ -149,7 +156,7 @@ namespace AudioCore.Demo
             try
             {
                 // Create the platform default audio output
-                _output = new PlatformOutput();
+                _output = new PlatformOutput(((AudioDevice)outputPicker.SelectedItem).ID);
                 // Create the test tone input using the specified frequency and volume, using the output sample rate and channel count
                 _testToneInput = new TestToneInput(_output.Channels, _output.SampleRate)
                 {
