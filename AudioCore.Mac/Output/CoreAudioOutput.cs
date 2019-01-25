@@ -20,7 +20,7 @@ namespace AudioCore.Mac.Output
         /// <summary>
         /// The output audio unit.
         /// </summary>
-        AudioUnit.AudioUnit audioUnit;
+        private AudioUnit.AudioUnit audioUnit;
         #endregion
 
         #region Constructor and Dispose
