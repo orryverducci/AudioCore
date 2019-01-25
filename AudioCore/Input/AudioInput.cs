@@ -6,7 +6,7 @@ namespace AudioCore.Input
     /// <summary>
     /// Provides an audio input.
     /// </summary>
-    public class AudioInput
+    public abstract class AudioInput
     {
         #region Private Fields
         /// <summary>
@@ -97,10 +97,7 @@ namespace AudioCore.Input
         /// </summary>
         /// <returns>The audio samples.</returns>
         /// <param name="framesRequested">The number of frames required.</param>
-        public virtual double[] GetFrames(int framesRequested)
-        {
-            throw new NotImplementedException("The GetFrames method has not been implemented for this audio input.");
-        }
+        public abstract double[] GetFrames(int framesRequested);
         #endregion
     }
 }

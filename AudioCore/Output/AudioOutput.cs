@@ -8,7 +8,7 @@ namespace AudioCore.Output
     /// <summary>
     /// Provides an audio output.
     /// </summary>
-    public class AudioOutput
+    public abstract class AudioOutput
     {
         #region Private Fields
         /// <summary>
@@ -172,18 +172,12 @@ namespace AudioCore.Output
         /// <summary>
         /// Start playback from the audio output.
         /// </summary>
-        public virtual void Start()
-        {
-            throw new NotImplementedException("The Start method has not been implemented for this audio output.");
-        }
+        public abstract void Start();
 
         /// <summary>
         /// Stop playback from the audio output.
         /// </summary>
-        public virtual void Stop()
-        {
-            throw new NotImplementedException("The Stop method has not been implemented for this audio output.");
-        }
+        public abstract void Stop();
 
         /// <summary>
         /// Get frames of audio from the audio inputs.
