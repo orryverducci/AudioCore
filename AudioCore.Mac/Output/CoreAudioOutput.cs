@@ -83,7 +83,7 @@ namespace AudioCore.Mac.Output
             {
                 Channels = (int)outputFormat.ChannelsPerFrame;
             }
-            BitDepth = 32;
+            Format = new Common.AudioFormat(32, SampleType.FloatingPoint);
             // Set stream format
             AudioStreamBasicDescription streamFormat = new AudioStreamBasicDescription
             {

@@ -27,11 +27,6 @@ namespace AudioCore.Output
         private int _bufferSize;
 
         /// <summary>
-        /// The audio output bit depth.
-        /// </summary>
-        private int _bitDepth;
-
-        /// <summary>
         /// The audio inputs.
         /// </summary>
         private List<AudioInput> _audioInputs = new List<AudioInput>();
@@ -99,31 +94,10 @@ namespace AudioCore.Output
         }
 
         /// <summary>
-        /// Gets the audio output bit depth.
+        /// Gets the output audio format.
         /// </summary>
-        /// <value>The audio output bit depth.</value>
-        public int BitDepth
-        {
-            get
-            {
-                return _bitDepth;
-            }
-            protected set
-            {
-                // Check value is between 8 and 64 bits
-                if (value < 8 || value > 64)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), "Bit depth must be between 8 bit and 64 bit.");
-                }
-                // Check value is a multiple of 2 (i.e. full bytes), or 24 bits which is also valid
-                if ((value & (value - 1)) != 0)
-                {
-                    throw new ArgumentException("Bit depth must be a power of 2, or 24 bit.", nameof(value));
-                }
-                // Set value
-                _bitDepth = value;
-            }
-        }
+        /// <value>The output audio output format.</value>
+        public AudioFormat Format { get; protected set; }
 
         /// <summary>
         /// Gets the current playback state.
