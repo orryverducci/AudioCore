@@ -81,7 +81,7 @@ namespace AudioCore.Mac.Output
             }
             else
             {
-                Channels = (int)outputFormat.ChannelsPerFrame;
+                Channels = outputFormat.ChannelsPerFrame;
             }
             Format = new Common.AudioFormat(32, SampleType.FloatingPoint);
             // Set stream format
