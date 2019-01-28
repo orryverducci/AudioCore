@@ -43,7 +43,7 @@ namespace AudioCore.Mac.Common
             // If getting the property was not successful, throw an exception
             if (status != AudioUnitStatus.NoError)
             {
-                throw new Exception(status.ToString());
+                throw new Exception($"Unable to retrieve the number of frames in the audio unit buffer - {status.ToString()}");
             }
             // Return the number of frames
             return bufferFrames;
