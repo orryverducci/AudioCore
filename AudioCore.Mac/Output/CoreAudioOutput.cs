@@ -7,6 +7,7 @@ using CoreFoundation;
 using ObjCRuntime;
 using AudioCore.Common;
 using AudioCore.Converters;
+using AudioCore.Mac.Common;
 using AudioCore.Output;
 
 namespace AudioCore.Mac.Output
@@ -83,7 +84,7 @@ namespace AudioCore.Mac.Output
             {
                 Channels = outputFormat.ChannelsPerFrame;
             }
-            Format = new Common.AudioFormat(32, SampleType.FloatingPoint);
+            Format = new AudioCore.Common.AudioFormat(32, SampleType.FloatingPoint);
             // Set stream format
             AudioStreamBasicDescription streamFormat = new AudioStreamBasicDescription
             {

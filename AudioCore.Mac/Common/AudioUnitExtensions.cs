@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using AudioUnit;
 using ObjCRuntime;
 
-namespace AudioCore.Mac.Output
+namespace AudioCore.Mac.Common
 {
     /// <summary>
     /// Adds extension methods to the <see cref="T:AudioUnit.AudioUnit"/> class, providing latency information
