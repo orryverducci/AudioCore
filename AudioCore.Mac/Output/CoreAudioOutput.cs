@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using AudioToolbox;
 using AudioUnit;
-using CoreFoundation;
-using ObjCRuntime;
 using AudioCore.Common;
 using AudioCore.Converters;
 using AudioCore.Mac.Common;
@@ -157,63 +154,21 @@ namespace AudioCore.Mac.Output
         /// <returns>A list of <see cref="T:AudioCore.Common.AudioDevice"/> representing the available output devices.</returns>
         public static List<AudioDevice> GetDevices()
         {
-            // Initialise a uint to hold property sizes and an int to hold error codes from retrieving properties
-            uint propertySize;
-            int error;
             // Create a list of devices
             List<AudioDevice> devices = new List<AudioDevice>();
-            // Setup qualifier data to be used when retrieving devices
-            uint inQualifierDataSize = 0;
-            IntPtr inQualifierData = IntPtr.Zero;
-            // Get the size of the devices property, throwing an exception if there was an issue
-            AudioObjectPropertyAddress devicePropertyAddress = new AudioObjectPropertyAddress(AudioObjectPropertySelector.Devices, AudioObjectPropertyScope.Global, AudioObjectPropertyElement.Master);
-            error = AudioObjectGetPropertyDataSize(1, ref devicePropertyAddress, ref inQualifierDataSize, ref inQualifierData, out propertySize);
-            if (error != 0)
-            {
-                throw new Exception($"Unable to retrieve the number of devices - OSStatus Error: {error}");
-            }
-            // Get the number of devices by dividing the devices property by the native size of uint
-            uint numberOfDevices = propertySize / (uint)Marshal.SizeOf(typeof(uint));
-            // Get the ID of the devices, throwing an exception if there was an issue
-            uint[] deviceIDs = new uint[numberOfDevices];
-            error = AudioObjectGetPropertyData(1, ref devicePropertyAddress, ref inQualifierDataSize, ref inQualifierData, ref propertySize, deviceIDs);
-            if (error != 0)
-            {
-                throw new Exception($"Unable to retrieve devices - OSStatus Error: {error}");
-            }
-            // Get the default output device, throwing an exception if there was an issue
-            uint defaultDevice;
-            AudioObjectPropertyAddress defaultPropertyAddress = new AudioObjectPropertyAddress(AudioObjectPropertySelector.DefaultOutputDevice, AudioObjectPropertyScope.Output, AudioObjectPropertyElement.Master);
-            propertySize = (uint)Marshal.SizeOf(typeof(uint));
-            error = AudioObjectGetPropertyData(1, ref defaultPropertyAddress, ref inQualifierDataSize, ref inQualifierData, ref propertySize, out defaultDevice);
+            // Get the ID's of the devices
+            uint[] deviceIDs = AudioUnitExtensions.GetDeviceIDs();
+            // Get the default output device
+            uint defaultDevice = AudioUnitExtensions.GetDefaultDeviceID(AudioObjectPropertyScope.Output);
             // For each device ID, get details about the device and add it to the list of devices
             foreach (var deviceID in deviceIDs)
             {
-                // Get if the device has output streams, skipping over it if it doesn't and throwing an exception if there was an issue
-                AudioObjectPropertyAddress outputStreamsPropertyAddress = new AudioObjectPropertyAddress(0x73746d23 /* stm# */, (uint)AudioObjectPropertyScope.Output, (uint)AudioObjectPropertyElement.Master);
-                error = AudioObjectGetPropertyDataSize(deviceID, ref outputStreamsPropertyAddress, ref inQualifierDataSize, ref inQualifierData, out propertySize);
-                if (error != 0)
-                {
-                    throw new Exception($"Unable to determine if device {deviceID} has outputs - OSStatus Error: {error}");
-                }
-                if (propertySize == 0)
+                // Get if the device has output streams, skipping over it if it doesn't
+                if (AudioUnitExtensions.GetStreamCount(deviceID, AudioObjectPropertyScope.Output) == 0)
                 {
                     continue;
                 }
-                // Get a pointer to the device name, throwing an exception if there was an issue
-                AudioObjectPropertyAddress namePropertyAddress = new AudioObjectPropertyAddress(0x6c6e616d /* lnam */, (uint)AudioObjectPropertyScope.Global, (uint)AudioObjectPropertyElement.Master);
-                IntPtr namePtr = IntPtr.Zero;
-                unsafe
-                {
-                    propertySize = (uint)sizeof(IntPtr);
-                }
-                error = AudioObjectGetPropertyData(deviceID, ref namePropertyAddress, ref inQualifierDataSize, ref inQualifierData, ref propertySize, out namePtr);
-                if (error != 0)
-                {
-                    throw new Exception($"Unable to retrieve name for device {deviceID} - OSStatus Error: {error}");
-                }
-                // Read the device name string from the pointer
-                CFString name = new CFString(namePtr);
+                string name = AudioUnitExtensions.GetDeviceName(deviceID);
                 // Add the device to the list of devices
                 AudioDevice device = new AudioDevice
                 {
@@ -225,84 +180,6 @@ namespace AudioCore.Mac.Output
             }
             // Return the list of devices
             return devices;
-        }
-        #endregion
-
-        #region Platform Invokes
-        /// <summary>
-        /// Gets the data from an audio property.
-        /// </summary>
-        /// <returns>0 if there was no error, an OSStatus code if there was.</returns>
-        /// <param name="inObjectID">The ID of the audio object to get a property from.</param>
-        /// <param name="inAddress">The <see cref="T:AudioCore.Mac.CoreAudioOutput.AudioObjectPropertyAddress"/> representing the property to be retrieved.</param>
-        /// <param name="inQualifierDataSize">The size of the input qualifier data.</param>
-        /// <param name="inQualifierData">The input qualifier data.</param>
-        /// <param name="ioDataSize">The size of the data being output.</param>
-        /// <param name="outData">The data being output.</param>
-        [DllImport(Constants.AudioUnitLibrary)]
-        private static extern int AudioObjectGetPropertyData(uint inObjectID, ref AudioObjectPropertyAddress inAddress, ref uint inQualifierDataSize, ref IntPtr inQualifierData, ref uint ioDataSize,  uint[] outData);
-
-        /// <summary>
-        /// Gets the data from an audio property.
-        /// </summary>
-        /// <returns>0 if there was no error, an OSStatus code if there was.</returns>
-        /// <param name="inObjectID">The ID of the audio object to get a property from.</param>
-        /// <param name="inAddress">The <see cref="T:AudioCore.Mac.CoreAudioOutput.AudioObjectPropertyAddress"/> representing the property to be retrieved.</param>
-        /// <param name="inQualifierDataSize">The size of the input qualifier data.</param>
-        /// <param name="inQualifierData">The input qualifier data.</param>
-        /// <param name="ioDataSize">The size of the data being output.</param>
-        /// <param name="outData">The data being output.</param>
-        [DllImport(Constants.AudioUnitLibrary)]
-        private static extern int AudioObjectGetPropertyData(uint inObjectID, ref AudioObjectPropertyAddress inAddress, ref uint inQualifierDataSize, ref IntPtr inQualifierData, ref uint ioDataSize, out uint outData);
-
-        /// <summary>
-        /// Gets the data from an audio property.
-        /// </summary>
-        /// <returns>0 if there was no error, an OSStatus code if there was.</returns>
-        /// <param name="inObjectID">The ID of the audio object to get a property from.</param>
-        /// <param name="inAddress">The <see cref="T:AudioCore.Mac.CoreAudioOutput.AudioObjectPropertyAddress"/> representing the property to be retrieved.</param>
-        /// <param name="inQualifierDataSize">The size of the input qualifier data.</param>
-        /// <param name="inQualifierData">The input qualifier data.</param>
-        /// <param name="ioDataSize">The size of the data being output.</param>
-        /// <param name="outData">The data being output.</param>
-        [DllImport(Constants.AudioUnitLibrary)]
-        private static extern int AudioObjectGetPropertyData(uint inObjectID, ref AudioObjectPropertyAddress inAddress, ref uint inQualifierDataSize, ref IntPtr inQualifierData, ref uint ioDataSize, out IntPtr outData);
-
-        /// <summary>
-        /// Gets the size of the data from an audio property.
-        /// </summary>
-        /// <returns>0 if there was no error, an OSStatus code if there was.</returns>
-        /// <param name="inObjectID">The ID of the audio object to get a property from.</param>
-        /// <param name="inAddress">The <see cref="T:AudioCore.Mac.CoreAudioOutput.AudioObjectPropertyAddress"/> representing the property to be retrieved.</param>
-        /// <param name="inQualifierDataSize">The size of the input qualifier data.</param>
-        /// <param name="inQualifierData">The input qualifier data.</param>
-        /// <param name="outDataSize">The size of the data being out.</param>
-        [DllImport(Constants.AudioUnitLibrary)]
-        private static extern int AudioObjectGetPropertyDataSize(uint inObjectID, ref AudioObjectPropertyAddress inAddress, ref uint inQualifierDataSize, ref IntPtr inQualifierData, out uint outDataSize);
-
-        /// <summary>
-        /// An audio object property address.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        private struct AudioObjectPropertyAddress
-        {
-            public uint Selector;
-            public uint Scope;
-            public uint Element;
-
-            public AudioObjectPropertyAddress(uint selector, uint scope, uint element)
-            {
-                Selector = selector;
-                Scope = scope;
-                Element = element;
-            }
-
-            public AudioObjectPropertyAddress(AudioObjectPropertySelector selector, AudioObjectPropertyScope scope, AudioObjectPropertyElement element)
-            {
-                Selector = (uint)selector;
-                Scope = (uint)scope;
-                Element = (uint)element;
-            }
         }
         #endregion
 
