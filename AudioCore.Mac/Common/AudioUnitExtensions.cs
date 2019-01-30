@@ -206,7 +206,7 @@ namespace AudioCore.Mac.Common
         /// <param name="scope">The audio scope to get the streams from.</param>
         internal static uint GetStreamCount(uint deviceID, AudioObjectPropertyScope scope)
         {
-            // Setup qualifier data to be used when retrieving the default device
+            // Setup qualifier data to be used when retrieving the number of streams
             uint inQualifierDataSize = 0;
             IntPtr inQualifierData = IntPtr.Zero;
             // Get the ID of the default device
@@ -234,7 +234,7 @@ namespace AudioCore.Mac.Common
             {
                 propertySize = (uint)sizeof(IntPtr);
             }
-            // Setup qualifier data to be used when retrieving the default device
+            // Setup qualifier data to be used when retrieving the device name
             uint inQualifierDataSize = 0;
             IntPtr inQualifierData = IntPtr.Zero;
             // Get a pointer to the device name
