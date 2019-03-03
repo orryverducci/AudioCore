@@ -15,7 +15,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Text="Output Device" Grid.Row="0" Grid.Column="0" />
-            <Picker x:Name="outputPicker" Grid.Row="0" Grid.Column="1" SelectedIndexChanged="ToneChanged" />
+            <Picker x:Name="outputPicker" Grid.Row="0" Grid.Column="1" />
             <Label Text="Type" Grid.Row="1" Grid.Column="0" />
             <Picker x:Name="typePicker" Grid.Row="1" Grid.Column="1" SelectedIndexChanged="ToneChanged">
                 <Picker.ItemsSource>

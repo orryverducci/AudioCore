@@ -171,6 +171,8 @@ namespace AudioCore.Demo
                 // Set to currently playing, changing the button text
                 _playing = true;
                 playbackButton.Text = "Stop";
+                // Disable the device picker
+                outputPicker.IsEnabled = false;
             }
             catch (Exception e) // If an error occurs
             {
@@ -201,6 +203,8 @@ namespace AudioCore.Demo
             // Set to stopped, changing the button text
             _playing = false;
             playbackButton.Text = "Play";
+            // Eable the device picker
+            outputPicker.IsEnabled = true;
         }
         #endregion
     }
