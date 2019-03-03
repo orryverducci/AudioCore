@@ -187,7 +187,7 @@ namespace AudioCore.Mac.Output
         /// <summary>
         /// Callback which provides the requested audio samples to the output audio unit.
         /// </summary>
-        /// <returns>The audio.</returns>
+        /// <returns>The status of the render callback.</returns>
         /// <param name="actionFlags">The configuration flags for the audio unit.</param>
         /// <param name="timeStamp">The audio time stamp.</param>
         /// <param name="busNumber">The bus number.</param>
