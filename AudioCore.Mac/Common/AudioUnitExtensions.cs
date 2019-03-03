@@ -186,8 +186,20 @@ namespace AudioCore.Mac.Common
             // Setup qualifier data to be used when retrieving the default device
             uint inQualifierDataSize = 0;
             IntPtr inQualifierData = IntPtr.Zero;
+            // Set the property address depending on the scope
+            AudioObjectPropertyAddress propertyAddress;
+            switch (scope)
+            {
+                case AudioObjectPropertyScope.Input:
+                    propertyAddress = new AudioObjectPropertyAddress((uint)AudioObjectPropertySelector.DefaultInputDevice, AudioObjectPropertyScope.Global, AudioObjectPropertyElement.Master);
+                    break;
+                case AudioObjectPropertyScope.Output:
+                    propertyAddress = new AudioObjectPropertyAddress((uint)AudioObjectPropertySelector.DefaultOutputDevice, AudioObjectPropertyScope.Global, AudioObjectPropertyElement.Master);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(scope), "The audio scope must be either the input or output.");
+            }
             // Get the ID of the default device
-            AudioObjectPropertyAddress propertyAddress = new AudioObjectPropertyAddress((uint)AudioObjectPropertySelector.DefaultOutputDevice, scope, AudioObjectPropertyElement.Master);
             AudioUnitStatus status = AudioObjectGetPropertyData(kAudioObjectSystemObject, ref propertyAddress, ref inQualifierDataSize, ref inQualifierData, ref propertySize, out uint deviceID);
             // If getting the property data was not successful, throw an exception
             if (status != AudioUnitStatus.NoError)
