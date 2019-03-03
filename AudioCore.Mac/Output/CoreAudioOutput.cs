@@ -21,6 +21,18 @@ namespace AudioCore.Mac.Output
         private AudioUnit.AudioUnit _audioUnit;
         #endregion
 
+        #region Properties
+        /// <summary>
+        /// Gets or sets if macOS can save power by increasing the audio buffer size when required, for example when a device is on battery power.
+        /// </summary>
+        /// <value><c>true</c> if power saving is allowed, otherwise <c>false</c>.</value>
+        public bool AllowPowerSaving
+        {
+            get => AudioUnitExtensions.GetPowerSavingEnabled();
+            set => AudioUnitExtensions.SetPowerSavingEnabled(value);
+        }
+        #endregion
+
         #region Constructor and Dispose
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system default output device and settings.
@@ -104,6 +116,8 @@ namespace AudioCore.Mac.Output
             _audioUnit.Initialize();
             // Set the output buffer size
             BufferSize = (int)_audioUnit.GetBufferFrames();
+            // Enable power saving by default
+            AllowPowerSaving = true;
         }
 
         /// <summary>

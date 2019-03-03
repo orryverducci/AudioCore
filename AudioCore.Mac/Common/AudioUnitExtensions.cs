@@ -31,6 +31,16 @@ namespace AudioCore.Mac.Common
         /// The property ID for the audio object name.
         /// </summary>
         private const int kAudioObjectPropertyName = 0x6c6e616d; // This value is equivalent to 'lnam' in ASCII
+
+        /// <summary>
+        /// The ID for power saving being disabled.
+        /// </summary>
+        private const int kAudioHardwarePowerHintNone = 0;
+
+        /// <summary>
+        /// The ID for power saving being enabled.
+        /// </summary>
+        private const int kAudioHardwarePowerHintFavorSavingPower = 1;
         #endregion
 
         #region Platform Invokes
@@ -97,6 +107,19 @@ namespace AudioCore.Mac.Common
         /// <param name="outDataSize">The size of the data being out.</param>
         [DllImport(Constants.AudioUnitLibrary)]
         private static extern AudioUnitStatus AudioObjectGetPropertyDataSize(uint inObjectID, ref AudioObjectPropertyAddress inAddress, ref uint inQualifierDataSize, ref IntPtr inQualifierData, out uint outDataSize);
+
+        /// <summary>
+        /// Sets the data for an audio property.
+        /// </summary>
+        /// <returns>An <see cref="T:AudioUnit.AudioUnitStatus"/> indicating if setting the property was successful or not.</returns>
+        /// <param name="inObjectID">The ID of the audio object to set a property on.</param>
+        /// <param name="inAddress">The <see cref="T:AudioCore.Mac.CoreAudioOutput.AudioObjectPropertyAddress"/> representing the property to be set.</param>
+        /// <param name="inQualifierDataSize">The size of the input qualifier data.</param>
+        /// <param name="inQualifierData">The input qualifier data.</param>
+        /// <param name="inDataSize">The size of the data being input.</param>
+        /// <param name="inData">The data being input.</param>
+        [DllImport(Constants.AudioUnitLibrary)]
+        private static extern AudioUnitStatus AudioObjectSetPropertyData(uint inObjectID, ref AudioObjectPropertyAddress inAddress, uint inQualifierDataSize, ref IntPtr inQualifierData, uint inDataSize, ref uint inData);
 
         /// <summary>
         /// An audio object property address.
@@ -260,6 +283,57 @@ namespace AudioCore.Mac.Common
             }
             // Read the device name string from the pointer and return it
             return new CFString(namePtr);
+        }
+
+        /// <summary>
+        /// Gets if power saving has been enabled.
+        /// </summary>
+        /// <returns><c>true</c> if power saving enabled is enabled, <c>false</c> otherwise.</returns>
+        internal static bool GetPowerSavingEnabled()
+        {
+            // Set the size of the data to be returned in bytes
+            uint propertySize = (uint)Marshal.SizeOf(typeof(uint));
+            // Setup qualifier data to be used when retrieving the power saving hint
+            uint inQualifierDataSize = 0;
+            IntPtr inQualifierData = IntPtr.Zero;
+            // Get the power saving hint
+            AudioObjectPropertyAddress propertyAddress = new AudioObjectPropertyAddress((uint)AudioObjectPropertySelector.PowerHint, AudioObjectPropertyScope.Global, AudioObjectPropertyElement.Master);
+            AudioUnitStatus status = AudioObjectGetPropertyData(kAudioObjectSystemObject, ref propertyAddress, ref inQualifierDataSize, ref inQualifierData, ref propertySize, out uint powerHint);
+            // If getting the property data was not successful, throw an exception
+            if (status != AudioUnitStatus.NoError)
+            {
+                throw new Exception($"Unable to retrieve audio power saving hint - {status.ToString()}");
+            }
+            // Return if power saving has been enabled
+            return powerHint == kAudioHardwarePowerHintFavorSavingPower;
+        }
+
+        /// <summary>
+        /// Gets if power saving has been enabled.
+        /// </summary>
+        /// <param name="enabled"><c>true</c> if power saving enabled is enabled, <c>false</c> otherwise.</param>
+        internal static void SetPowerSavingEnabled(bool enabled)
+        {
+            // Set the data to be set
+            uint powerHint;
+            if (enabled)
+            {
+                powerHint = kAudioHardwarePowerHintFavorSavingPower;
+            }
+            else
+            {
+                powerHint = kAudioHardwarePowerHintNone;
+            }
+            // Setup qualifier data to be used when retrieving the power saving hint
+            IntPtr inQualifierData = IntPtr.Zero;
+            // Set the power saving hint
+            AudioObjectPropertyAddress propertyAddress = new AudioObjectPropertyAddress((uint)AudioObjectPropertySelector.PowerHint, AudioObjectPropertyScope.Global, AudioObjectPropertyElement.Master);
+            AudioUnitStatus status = AudioObjectSetPropertyData(kAudioObjectSystemObject, ref propertyAddress, 0, ref inQualifierData, (uint)Marshal.SizeOf(typeof(uint)), ref powerHint);
+            // If getting the property data was not successful, throw an exception
+            if (status != AudioUnitStatus.NoError)
+            {
+                throw new Exception($"Unable to set audio power saving hint - {status.ToString()}");
+            }
         }
         #endregion
     }
