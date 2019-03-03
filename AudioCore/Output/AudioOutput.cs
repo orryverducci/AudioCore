@@ -96,7 +96,7 @@ namespace AudioCore.Output
         /// <summary>
         /// Gets the output audio format.
         /// </summary>
-        /// <value>The output audio output format.</value>
+        /// <value>The output audio format.</value>
         public AudioFormat Format { get; protected set; }
 
         /// <summary>
