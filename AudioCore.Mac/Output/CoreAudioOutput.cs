@@ -18,7 +18,7 @@ namespace AudioCore.Mac.Output
         /// <summary>
         /// The output audio unit.
         /// </summary>
-        private AudioUnit.AudioUnit audioUnit;
+        private AudioUnit.AudioUnit _audioUnit;
         #endregion
 
         #region Constructor and Dispose
@@ -56,14 +56,14 @@ namespace AudioCore.Mac.Output
                 throw new Exception("Unable to setup audio component.");
             }
             // Create the output audio unit
-            audioUnit = new AudioUnit.AudioUnit(audioOutputComponent);
+            _audioUnit = new AudioUnit.AudioUnit(audioOutputComponent);
             // Set the output device if not set to use the system default
             if (deviceID != -1)
             {
-                audioUnit.SetCurrentDevice((uint)deviceID, AudioUnitScopeType.Global, 0);
+                _audioUnit.SetCurrentDevice((uint)deviceID, AudioUnitScopeType.Global, 0);
             }
             // Get the output format for use if any of the arguments are set to the -1 default value
-            AudioStreamBasicDescription outputFormat = audioUnit.GetAudioFormat(AudioUnitScopeType.Output);
+            AudioStreamBasicDescription outputFormat = _audioUnit.GetAudioFormat(AudioUnitScopeType.Output);
             // Set the audio format properties
             if (sampleRate != -1)
             {
@@ -94,16 +94,16 @@ namespace AudioCore.Mac.Output
                 ChannelsPerFrame = Channels,
                 BitsPerChannel = 32
             };
-            audioUnit.SetFormat(streamFormat, AudioUnitScopeType.Input, 0);
+            _audioUnit.SetFormat(streamFormat, AudioUnitScopeType.Input, 0);
             // Set render callback, and check there's no error
-            if (audioUnit.SetRenderCallback(RenderAudio, AudioUnitScopeType.Input, 0) != AudioUnitStatus.NoError)
+            if (_audioUnit.SetRenderCallback(RenderAudio, AudioUnitScopeType.Input, 0) != AudioUnitStatus.NoError)
             {
                 throw new Exception("Unable to setup audio output render callback.");
             }
             // Initialise audio unit
-            audioUnit.Initialize();
+            _audioUnit.Initialize();
             // Set the output buffer size
-            BufferSize = (int)audioUnit.GetBufferFrames();
+            BufferSize = (int)_audioUnit.GetBufferFrames();
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace AudioCore.Mac.Output
         /// the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> was occupying.</remarks>
         public void Dispose()
         {
-            audioUnit.Dispose();
+            _audioUnit.Dispose();
         }
         #endregion
 
@@ -129,7 +129,7 @@ namespace AudioCore.Mac.Output
         {
             if (PlaybackState != PlaybackState.PLAYING)
             {
-                audioUnit.Start();
+                _audioUnit.Start();
                 PlaybackState = PlaybackState.PLAYING;
             }
         }
@@ -141,7 +141,7 @@ namespace AudioCore.Mac.Output
         {
             if (PlaybackState != PlaybackState.STOPPED)
             {
-                audioUnit.Stop();
+                _audioUnit.Stop();
                 PlaybackState = PlaybackState.STOPPED;
             }
         }
