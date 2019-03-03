@@ -85,6 +85,12 @@ namespace AudioCore.Input
         }
 
         /// <summary>
+        /// Gets the input audio format.
+        /// </summary>
+        /// <value>The input audio format.</value>
+        public AudioFormat Format { get; protected set; } = new AudioFormat(64, SampleType.FloatingPoint);
+
+        /// <summary>
         /// Gets the current playback state.
         /// </summary>
         /// <value>Whether the audio input is playing or not.</value>
