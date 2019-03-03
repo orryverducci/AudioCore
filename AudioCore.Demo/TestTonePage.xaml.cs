@@ -155,7 +155,7 @@ namespace AudioCore.Demo
             // Try to start playback, catching any errors
             try
             {
-                // Create the platform default audio output
+                // Create the platform audio output
                 _output = new PlatformOutput(((AudioDevice)outputPicker.SelectedItem).ID);
                 // Create the test tone input using the specified frequency and volume, using the output sample rate and channel count
                 _testToneInput = new TestToneInput(_output.Channels, _output.SampleRate)

@@ -7,7 +7,7 @@ using AudioCore.Mac.Output;
 namespace AudioCore.Demo
 {
     /// <summary>
-    /// Provides the default audio output for the platform.
+    /// Provides the audio device output for the platform.
     /// </summary>
     public class PlatformOutput : IDisposable
     {
