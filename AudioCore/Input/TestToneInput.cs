@@ -40,7 +40,7 @@ namespace AudioCore.Input
         /// <summary>
         /// The set audio volume as a linear value.
         /// </summary>
-        private double _volumeLinear;
+        private double _volumeLinear = 1;
         #endregion
 
         #region Properties
@@ -86,7 +86,7 @@ namespace AudioCore.Input
         /// Gets or sets the type of test tone to be generated.
         /// </summary>
         /// <value>The type.</value>
-        public ToneType Type { get; set; }
+        public ToneType Type { get; set; } = ToneType.SineWave;
         #endregion
 
         #region Constructor
