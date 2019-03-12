@@ -43,10 +43,7 @@ namespace AudioCore.Demo
         /// <value>The number of audio channels.</value>
         public int Channels
         {
-            get
-            {
-                return coreAudioOutput.Channels;
-            }
+            get => coreAudioOutput.Channels;
         }
 
         /// <summary>
@@ -55,10 +52,7 @@ namespace AudioCore.Demo
         /// <value>The audio sample rate in Hertz.</value>
         public int SampleRate
         {
-            get
-            {
-                return coreAudioOutput.SampleRate;
-            }
+            get => coreAudioOutput.SampleRate;
         }
 
         /// <summary>
@@ -67,10 +61,7 @@ namespace AudioCore.Demo
         /// <value>The playback state.</value>
         public PlaybackState PlaybackState
         {
-            get
-            {
-                return coreAudioOutput.PlaybackState;
-            }
+            get => coreAudioOutput.PlaybackState;
         }
 
         /// <summary>

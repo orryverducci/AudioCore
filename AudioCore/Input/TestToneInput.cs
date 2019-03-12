@@ -50,10 +50,7 @@ namespace AudioCore.Input
         /// <value>The frequency of the test tone in Hertz.</value>
         public int Frequency
         {
-            get
-            {
-                return _frequency;
-            }
+            get => _frequency;
             set
             {
                 if (value < 0)
@@ -70,10 +67,7 @@ namespace AudioCore.Input
         /// <value>The volume of the test tone in dBFS.</value>
         public int Volume
         {
-            get
-            {
-                return _volumeDBFS;
-            }
+            get => _volumeDBFS;
             set
             {
                 _volumeDBFS = value;

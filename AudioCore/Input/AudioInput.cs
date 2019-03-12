@@ -32,10 +32,7 @@ namespace AudioCore.Input
         /// <value>The number of audio channels.</value>
         public int Channels
         {
-            get
-            {
-                return _channels;
-            }
+            get => _channels;
             protected set
             {
                 if (value < 0)
@@ -51,10 +48,7 @@ namespace AudioCore.Input
         /// </summary>
         /// <value>The audio sample rate in Hertz.</value>
         public int SampleRate {
-            get
-            {
-                return _sampleRate;
-            }
+            get => _sampleRate;
             protected set
             {
                 if (value < 0)
@@ -70,10 +64,7 @@ namespace AudioCore.Input
         /// </summary>
         /// <value>The audio latency.</value>
         public int Latency {
-            get
-            {
-                return _latency;
-            }
+            get => _latency;
             protected set
             {
                 if (value < 0)

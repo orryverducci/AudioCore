@@ -7,9 +7,7 @@ namespace AudioCore.Demo
     {
         public ListView MenuList
         {
-            get {
-                return menuList;
-            }
+            get => menuList;
         }
 
         public MenuPage()

@@ -129,10 +129,7 @@ namespace AudioCore.Mac.Output
         /// <see cref="Dispose"/>, you must release all references to the
         /// <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> so the garbage collector can reclaim the memory that
         /// the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> was occupying.</remarks>
-        public void Dispose()
-        {
-            _audioUnit.Dispose();
-        }
+        public void Dispose() => _audioUnit.Dispose();
         #endregion
 
         #region Playback Methods

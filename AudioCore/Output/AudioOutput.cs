@@ -39,10 +39,7 @@ namespace AudioCore.Output
         /// <value>The number of audio channels.</value>
         public int Channels
         {
-            get
-            {
-                return _channels;
-            }
+            get => _channels;
             protected set
             {
                 if (value < 0)
@@ -59,10 +56,7 @@ namespace AudioCore.Output
         /// <value>The audio sample rate in Hertz.</value>
         public int SampleRate
         {
-            get
-            {
-                return _sampleRate;
-            }
+            get => _sampleRate;
             protected set
             {
                 if (value < 0)
@@ -79,10 +73,7 @@ namespace AudioCore.Output
         /// <value>The output buffer size.</value>
         public int BufferSize
         {
-            get
-            {
-                return _bufferSize;
-            }
+            get => _bufferSize;
             protected set
             {
                 if (value < 0)
