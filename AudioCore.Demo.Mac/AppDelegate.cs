@@ -22,10 +22,7 @@ namespace AudioCore.Demo.Mac
 
         public override NSWindow MainWindow
         {
-            get
-            {
-                return window;
-            }
+            get => window;
         }
 
         public override void DidFinishLaunching(NSNotification notification)
@@ -35,9 +32,6 @@ namespace AudioCore.Demo.Mac
             base.DidFinishLaunching(notification);
         }
 
-        public override bool ApplicationShouldTerminateAfterLastWindowClosed(NSApplication sender)
-        {
-            return true;
-        }
+        public override bool ApplicationShouldTerminateAfterLastWindowClosed(NSApplication sender) => true;
     }
 }
