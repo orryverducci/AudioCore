@@ -10,7 +10,6 @@ namespace AudioCore.Demo
         public App()
         {
             InitializeComponent();
-
             MainPage = new MainPage();
         }
 
