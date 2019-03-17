@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using AudioToolbox;
 using AudioUnit;
 using AudioCore.Common;
@@ -211,16 +212,7 @@ namespace AudioCore.Mac.Output
             // Convert frames to bytes
             byte[] convertedFrames = BitDepthConverter.ToFloat(frames);
             // Output the audio
-            unsafe
-            {
-                // Get pointer to the output audio buffer
-                byte* outputPointer = (byte*)buffers[0].Data.ToPointer();
-                // Add each frame to the output audio buffers
-                for (int i = 0; i < convertedFrames.Length; i++)
-                {
-                    *outputPointer++ = convertedFrames[i];
-                }
-            }
+            Marshal.Copy(convertedFrames, 0, buffers[0].Data, convertedFrames.Length);
             // Return that there was no error
             return AudioUnitStatus.NoError;
         }
