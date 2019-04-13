@@ -65,6 +65,15 @@ namespace AudioCore.Demo
         }
 
         /// <summary>
+        /// Gets the number of audio frames the output is buffering by.
+        /// </summary>
+        /// <value>The output buffer size.</value>
+        public int BufferSize
+        {
+            get => coreAudioOutput.BufferSize;
+        }
+
+        /// <summary>
         /// Add an audio input to the output.
         /// </summary>
         /// <param name="input">The audio input to be added.</param>
