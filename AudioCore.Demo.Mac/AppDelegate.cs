@@ -3,6 +3,7 @@ using CoreGraphics;
 using Foundation;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.MacOS;
+using AudioCore.Mac;
 
 namespace AudioCore.Demo.Mac
 {
@@ -27,6 +28,7 @@ namespace AudioCore.Demo.Mac
 
         public override void DidFinishLaunching(NSNotification notification)
         {
+            PowerSaving.AllowPowerSaving = true;
             Forms.Init();
             LoadApplication(new App());
             base.DidFinishLaunching(notification);
