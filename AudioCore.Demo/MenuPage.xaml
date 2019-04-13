@@ -5,6 +5,7 @@
             <ListView.ItemsSource>
                 <x:Array Type="{x:Type local:MenuItem}">
                     <local:MenuItem Title="Test Tone Input" TargetType="{x:Type local:TestTonePage}" />
+                    <local:MenuItem Title="Input Device Echo" TargetType="{x:Type local:EchoPage}" />
                 </x:Array>
             </ListView.ItemsSource>
             <ListView.ItemTemplate>

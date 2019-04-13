@@ -13,6 +13,10 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)MainPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)MenuPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)TestTonePage.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)EchoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -28,5 +32,8 @@
       <DependentUpon>TestTonePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MenuItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EchoPage.xaml.cs">
+      <DependentUpon>EchoPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:AudioCore.Demo" x:Class="AudioCore.Demo.EchoPage" NavigationPage.HasNavigationBar="false" Title="Input Device Echo" Padding="20">
+    <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Output Device" Grid.Row="0" Grid.Column="0" />
+            <Picker x:Name="outputPicker" Grid.Row="0" Grid.Column="1" />
+            <Label Text="Input Device" Grid.Row="1" Grid.Column="0" />
+            <Picker x:Name="inputPicker" Grid.Row="1" Grid.Column="1" />
+        </Grid>
+        <Button x:Name="playbackButton" Text="Play" Clicked="PlaybackButtonClicked" HorizontalOptions="Start" />
+    </StackLayout>
+</ContentPage>
