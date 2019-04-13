@@ -12,6 +12,10 @@ namespace AudioCore.Common
         /// </summary>
         STOPPED,
         /// <summary>
+        /// Audio is currently buffering.
+        /// </summary>
+        BUFFERING,
+        /// <summary>
         /// Currently playing.
         /// </summary>
         PLAYING
