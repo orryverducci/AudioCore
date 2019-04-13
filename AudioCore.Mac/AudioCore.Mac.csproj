@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Output\CoreAudioOutput.cs" />
+    <Compile Include="Input\CoreAudioInput.cs" />
     <Compile Include="Common\AudioUnitExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Output\" />
+    <Folder Include="Input\" />
     <Folder Include="Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
