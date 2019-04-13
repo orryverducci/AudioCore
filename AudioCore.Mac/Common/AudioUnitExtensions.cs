@@ -309,7 +309,7 @@ namespace AudioCore.Mac.Common
         }
 
         /// <summary>
-        /// Gets if power saving has been enabled.
+        /// Sets if power saving has been enabled.
         /// </summary>
         /// <param name="enabled"><c>true</c> if power saving enabled is enabled, <c>false</c> otherwise.</param>
         internal static void SetPowerSavingEnabled(bool enabled)
