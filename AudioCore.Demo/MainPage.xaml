@@ -4,10 +4,6 @@
         <local:MenuPage x:Name="menuPage" />
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <NavigationPage>
-            <x:Arguments>
-                <local:TestTonePage />
-            </x:Arguments>
-        </NavigationPage>
+        <local:TestTonePage />
     </MasterDetailPage.Detail>
 </MasterDetailPage>

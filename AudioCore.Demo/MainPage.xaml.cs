@@ -16,7 +16,7 @@ namespace AudioCore.Demo
 			MenuItem selectedPage = e.SelectedItem as MenuItem;
 			if (selectedPage != null)
 			{
-				Detail = new NavigationPage((Page)Activator.CreateInstance(selectedPage.TargetType));
+                Detail = (Page)Activator.CreateInstance(selectedPage.TargetType);
 				menuPage.MenuList.SelectedItem = null;
 			}
 		}
