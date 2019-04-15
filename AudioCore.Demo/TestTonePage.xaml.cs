@@ -6,7 +6,7 @@ using AudioCore.Input;
 
 namespace AudioCore.Demo
 {
-    public partial class TestTonePage : ContentPage
+    public partial class TestTonePage : DemoPage
     {
         #region Private Fields
         /// <summary>
@@ -47,8 +47,6 @@ namespace AudioCore.Demo
         public TestTonePage()
         {
             InitializeComponent();
-            // Set the event handler for the page disappearing event
-            Disappearing += PageDisappearing;
             // Populate the output device list and select the default device
             List<AudioDevice> devices = PlatformOutput.GetDevices();
             outputPicker.ItemsSource = devices;
@@ -57,11 +55,9 @@ namespace AudioCore.Demo
         }
 
         /// <summary>
-        /// Event handler to dispose the platform audio output when the page disappears.
+        /// Disposes all resources held by the page, stopping audio playback.
         /// </summary>
-        /// <param name="sender">The sending object.</param>
-        /// <param name="e">The event arguments.</param>
-        void PageDisappearing(object sender, EventArgs e)
+        public override void Dispose()
         {
             if (_output != null)
             {

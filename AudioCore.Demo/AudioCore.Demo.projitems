@@ -35,5 +35,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)EchoPage.xaml.cs">
       <DependentUpon>EchoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)DemoPage.cs" />
   </ItemGroup>
 </Project>
