@@ -30,6 +30,11 @@ namespace AudioCore.Output
         /// The audio inputs.
         /// </summary>
         private List<AudioInput> _audioInputs = new List<AudioInput>();
+
+        /// <summary>
+        /// The current playback state.
+        /// </summary>
+        private PlaybackState _playbackState = PlaybackState.STOPPED;
         #endregion
 
         #region Properties
@@ -94,7 +99,22 @@ namespace AudioCore.Output
         /// Gets the current playback state.
         /// </summary>
         /// <value>Whether the audio output is playing or not.</value>
-        public PlaybackState PlaybackState { get; protected set; } = PlaybackState.STOPPED;
+        public PlaybackState PlaybackState
+        {
+            get => _playbackState;
+            protected set
+            {
+                _playbackState = value;
+                PlaybackStateChanged?.Invoke(this, null);
+            }
+        }
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// Occurs when the playback state property changes.
+        /// </summary>
+        public event EventHandler PlaybackStateChanged;
         #endregion
 
         #region Methods

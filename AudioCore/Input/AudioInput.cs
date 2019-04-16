@@ -23,6 +23,11 @@ namespace AudioCore.Input
         /// The latency on the audio in milliseconds.
         /// </summary>
         private int _latency;
+
+        /// <summary>
+        /// The current playback state.
+        /// </summary>
+        private PlaybackState _playbackState = PlaybackState.STOPPED;
         #endregion
 
         #region Properties
@@ -85,7 +90,21 @@ namespace AudioCore.Input
         /// Gets the current playback state.
         /// </summary>
         /// <value>Whether the audio input is playing or not.</value>
-        public PlaybackState PlaybackState { get; protected set; } = PlaybackState.STOPPED;
+        public PlaybackState PlaybackState {
+            get => _playbackState;
+            protected set
+            {
+                _playbackState = value;
+                PlaybackStateChanged?.Invoke(this, null);
+            }
+        }
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// Occurs when the playback state property changes.
+        /// </summary>
+        public event EventHandler PlaybackStateChanged;
         #endregion
 
         #region Methods
