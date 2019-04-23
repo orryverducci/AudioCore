@@ -97,21 +97,14 @@ namespace AudioCore.Input
             {
                 throw new InvalidOperationException("The buffer has not yet been initialised. Set a buffer size to initialise it.");
             }
-            // Check the buffer is big enough to accomodate the samples to be written
-            if (samples.Length > _buffer.Length)
-            {
-                throw new InvalidOperationException("The size of the buffer is not big enough to accomodate the samples to be written.");
-            }
-            // Check if the buffer will overflow
-            if (samples.Length > (_buffer.Length - _sampleCount))
-            {
-                throw new InvalidOperationException("The number of samples being written to the buffer will cause it to overflow.");
-            }
             // Write the samples
             lock (_lock)
             {
+                // Determine the maximum number of samples the buffer can be filled with, either the number of sample provided or the space left in the buffer
+                int maxSamples = Math.Min(samples.Length, _buffer.Length - _sampleCount);
+                // Keep writing samples to the buffer until the maximum number possible has been reached
                 int samplesWritten = 0;
-                while (samplesWritten < samples.Length)
+                while (samplesWritten < maxSamples)
                 {
                     // Determine the number of samples that can be written before the end of the buffer has been reached
                     int samplesToWrite = Math.Min(_buffer.Length - _writePosition, samples.Length - samplesWritten);
@@ -130,6 +123,11 @@ namespace AudioCore.Input
                 if (PlaybackState == PlaybackState.BUFFERING && (_sampleCount >= BufferSize))
                 {
                     PlaybackState = PlaybackState.PLAYING;
+                }
+                // If the buffer overflowed, throw an exception
+                if (maxSamples < samples.Length)
+                {
+                    throw new InvalidOperationException("The audio buffer has overflowed.");
                 }
             }
             // Fire data available event
