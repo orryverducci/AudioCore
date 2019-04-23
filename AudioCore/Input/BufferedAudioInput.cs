@@ -64,6 +64,11 @@ namespace AudioCore.Input
         {
             get => _sampleCount / Channels;
         }
+
+        /// <summary>
+        /// Gets or sets if an exception should be thrown when the audio buffer overflows.
+        /// </summary>
+        public bool ErrorOnOverflow { get; set; } = false;
         #endregion
 
         #region Events
@@ -71,6 +76,11 @@ namespace AudioCore.Input
         /// Event signalling that new audio samples are available in the buffer.
         /// </summary>
         public event EventHandler SamplesAvailable;
+
+        /// <summary>
+        /// Event signalling that more samples are being written to the buffer than it can hold.
+        /// </summary>
+        public event EventHandler BufferOverflow;
         #endregion
 
         #region Playback Methods
@@ -124,10 +134,14 @@ namespace AudioCore.Input
                 {
                     PlaybackState = PlaybackState.PLAYING;
                 }
-                // If the buffer overflowed, throw an exception
+                // If the buffer overflowed, fire overflow event or throw an exception if enabled
                 if (maxSamples < samples.Length)
                 {
-                    throw new InvalidOperationException("The audio buffer has overflowed.");
+                    if (ErrorOnOverflow)
+                    {
+                        throw new InvalidOperationException("The audio buffer has overflowed.");
+                    }
+                    BufferOverflow?.Invoke(this, null);
                 }
             }
             // Fire data available event
