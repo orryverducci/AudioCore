@@ -168,10 +168,10 @@ namespace AudioCore.Output
         /// Get frames of audio from the audio inputs.
         /// </summary>
         /// <param name="framesRequired">The number of frames required.</param>
-        protected double[] GetInputFrames(int framesRequired)
+        protected float[] GetInputFrames(int framesRequired)
         {
             // Create array of mixed (combined) frames
-            double[] mixedFrames = new double[framesRequired * Channels];
+            float[] mixedFrames = new float[framesRequired * Channels];
             // Get samples from each input that is playing
             foreach (var input in _audioInputs)
             {
@@ -179,7 +179,7 @@ namespace AudioCore.Output
                 if (input.PlaybackState == PlaybackState.PLAYING)
                 {
                     // Get frames from the audio input
-                    double[] inputFrames = input.GetFrames(framesRequired);
+                    float[] inputFrames = input.GetFrames(framesRequired);
                     // Get the shorter length from the returned frames array or the mixed frames array
                     int mixLength = (inputFrames.Length < mixedFrames.Length) ? inputFrames.Length : mixedFrames.Length;
                     // Add the frames from the audio input to the mixed frames

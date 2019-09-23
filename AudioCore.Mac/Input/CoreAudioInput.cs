@@ -188,7 +188,7 @@ namespace AudioCore.Mac.Input
             // Convert the sample to doubles
             byte[] data = new byte[framesAvailable * Channels * 4];
             Marshal.Copy(buffer[0].Data, data, 0, data.Length);
-            double[] samples = BitDepthConverter.FromFloat(data);
+            float[] samples = BitDepthConverter.FromFloat(data);
             // Write the samples to the buffer
             Write(samples);
             // Return that there was no error

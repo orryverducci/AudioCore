@@ -84,7 +84,7 @@ namespace AudioCore.Input
         /// Gets the input audio format.
         /// </summary>
         /// <value>The input audio format.</value>
-        public AudioFormat Format { get; protected set; } = new AudioFormat(64, SampleType.FloatingPoint);
+        public AudioFormat Format { get; protected set; } = new AudioFormat(32, SampleType.FloatingPoint);
 
         /// <summary>
         /// Gets the current playback state.
@@ -113,7 +113,7 @@ namespace AudioCore.Input
         /// </summary>
         /// <returns>The audio samples.</returns>
         /// <param name="framesRequested">The number of frames required.</param>
-        public abstract double[] GetFrames(int framesRequested);
+        public abstract float[] GetFrames(int framesRequested);
         #endregion
     }
 }

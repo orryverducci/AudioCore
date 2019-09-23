@@ -198,7 +198,7 @@ namespace AudioCore.Mac.Output
         private AudioUnitStatus RenderAudio(AudioUnitRenderActionFlags actionFlags, AudioTimeStamp timeStamp, uint busNumber, uint framesRequired, AudioBuffers buffers)
         {
             // Get frames to be output
-            double[] frames = GetInputFrames((int)framesRequired);
+            float[] frames = GetInputFrames((int)framesRequired);
             // Convert frames to bytes
             byte[] convertedFrames = BitDepthConverter.ToFloat(frames);
             // Output the audio

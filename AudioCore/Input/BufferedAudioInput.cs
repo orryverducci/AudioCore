@@ -12,7 +12,7 @@ namespace AudioCore.Input
         /// <summary>
         /// The buffer.
         /// </summary>
-        private double[] _buffer;
+        private float[] _buffer;
 
         /// <summary>
         /// An object to be used in locks to ensure that buffer operations are carried out on a single thread at a time.
@@ -51,7 +51,7 @@ namespace AudioCore.Input
             set
             {
                 ResetBuffer();
-                _buffer = new double[value * Channels * 2];
+                _buffer = new float[value * Channels * 2];
                 _bufferSize = value * Channels * 2;
             }
         }
@@ -100,7 +100,7 @@ namespace AudioCore.Input
         /// Writes audio samples to the buffer.
         /// </summary>
         /// <param name="samples">The samples to be written.</param>
-        protected void Write(double[] samples)
+        protected void Write(float[] samples)
         {
             // Check the buffer has been initialised
             if (_buffer == null)
@@ -153,10 +153,10 @@ namespace AudioCore.Input
         /// </summary>
         /// <returns>The audio samples.</returns>
         /// <param name="framesRequested">The number of frames required.</param>
-        public override double[] GetFrames(int framesRequested)
+        public override float[] GetFrames(int framesRequested)
         {
             // Create an array of samples to be returned
-            double[] samples = new double[framesRequested * Channels];
+            float[] samples = new float[framesRequested * Channels];
             // Copy the samples from the buffer
             lock (_lock)
             {
