@@ -133,7 +133,7 @@ namespace AudioCore.Input
                         break;
                     case ToneType.SawtoothWave:
                         // y = -((2 * amplitude) / pi) * arctan(cot(x * pi / period))
-                        sample = (float)(((-4 / Math.PI) * Math.Atan(1d / Math.Tan((_frameNumber * Math.PI) / ((float)SampleRate / (float)Frequency)))) * _volumeLinear);
+                        sample = (float)(((-2 / Math.PI) * Math.Atan(1d / Math.Tan((_frameNumber * Math.PI) / ((float)SampleRate / (float)Frequency)))) * _volumeLinear);
                         break;
                     case ToneType.TriangleWave:
                         // y = abs(2 * frequency * x % 2 - 1) * amplitude - offset
