@@ -33,6 +33,16 @@ namespace AudioCore.Mac.Common
         private const int kAudioObjectPropertyName = 0x6c6e616d; // This value is equivalent to 'lnam' in ASCII
 
         /// <summary>
+        /// The property ID for the audio device latency.
+        /// </summary>
+        private const int kAudioDevicePropertyLatency = 0x6c746e63; // This value is equivalent to 'ltnc' in ASCII
+
+        /// <summary>
+        /// The property ID for the audio device safety offset.
+        /// </summary>
+        private const int kAudioDevicePropertySafetyOffset = 0x73616674; // This value is equivalent to 'saft' in ASCII
+
+        /// <summary>
         /// The ID for power saving being disabled.
         /// </summary>
         private const int kAudioHardwarePowerHintNone = 0;
@@ -160,6 +170,48 @@ namespace AudioCore.Mac.Common
             }
             // Return the number of frames
             return bufferFrames;
+        }
+
+        /// <summary>
+        /// Gets the latency of the device in number of frames.
+        /// </summary>
+        /// <returns>The latency of the device in number of frames.</returns>
+        internal static uint GetDeviceLatency(this AudioUnit.AudioUnit audioUnit)
+        {
+            // The size in bytes of the data to be returned
+            uint size = sizeof(uint);
+            // The latency of the device, defaulting to 0
+            uint latency = 0;
+            // Get the buffer frames property
+            AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertyLatency, AudioUnitScopeType.Global, 0, ref latency, ref size);
+            // If getting the property was not successful, throw an exception
+            if (status != AudioUnitStatus.NoError)
+            {
+                throw new Exception($"Unable to retrieve the latency of the audio device - {status.ToString()}");
+            }
+            // Return the number of frames
+            return latency;
+        }
+
+        /// <summary>
+        /// Gets the safety offset of the device in number of frames.
+        /// </summary>
+        /// <returns>The safety offset of the device in number of frames.</returns>
+        internal static uint GetSafetyOffset(this AudioUnit.AudioUnit audioUnit)
+        {
+            // The size in bytes of the data to be returned
+            uint size = sizeof(uint);
+            // The safety offset, defaulting to 0
+            uint safetyOffset = 0;
+            // Get the buffer frames property
+            AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertyBufferFrameSize, AudioUnitScopeType.Global, 0, ref safetyOffset, ref size);
+            // If getting the property was not successful, throw an exception
+            if (status != AudioUnitStatus.NoError)
+            {
+                throw new Exception($"Unable to retrieve the safety offset - {status.ToString()}");
+            }
+            // Return the number of frames
+            return safetyOffset;
         }
         #endregion
 
