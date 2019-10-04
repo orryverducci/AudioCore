@@ -204,7 +204,7 @@ namespace AudioCore.Mac.Common
             // The safety offset, defaulting to 0
             uint safetyOffset = 0;
             // Get the buffer frames property
-            AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertyBufferFrameSize, AudioUnitScopeType.Global, 0, ref safetyOffset, ref size);
+            AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertySafetyOffset, AudioUnitScopeType.Global, 0, ref safetyOffset, ref size);
             // If getting the property was not successful, throw an exception
             if (status != AudioUnitStatus.NoError)
             {
