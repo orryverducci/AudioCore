@@ -182,7 +182,7 @@ namespace AudioCore.Mac.Common
             uint size = sizeof(uint);
             // The latency of the device, defaulting to 0
             uint latency = 0;
-            // Get the buffer frames property
+            // Get the device latency property
             AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertyLatency, AudioUnitScopeType.Global, 0, ref latency, ref size);
             // If getting the property was not successful, throw an exception
             if (status != AudioUnitStatus.NoError)
@@ -203,7 +203,7 @@ namespace AudioCore.Mac.Common
             uint size = sizeof(uint);
             // The safety offset, defaulting to 0
             uint safetyOffset = 0;
-            // Get the buffer frames property
+            // Get the safety offset property
             AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertySafetyOffset, AudioUnitScopeType.Global, 0, ref safetyOffset, ref size);
             // If getting the property was not successful, throw an exception
             if (status != AudioUnitStatus.NoError)
