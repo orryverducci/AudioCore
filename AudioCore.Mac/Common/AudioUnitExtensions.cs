@@ -51,6 +51,11 @@ namespace AudioCore.Mac.Common
         /// The ID for power saving being enabled.
         /// </summary>
         private const int kAudioHardwarePowerHintFavorSavingPower = 1;
+
+        /// <summary>
+        /// The ID for the audio device buffer range.
+        /// </summary>
+        private const int kAudioDevicePropertyBufferFrameSizeRange = 0x66737a23; // This value is equivalent to 'fsz#' in ASCII
         #endregion
 
         #region Platform Invokes
@@ -66,6 +71,19 @@ namespace AudioCore.Mac.Common
         /// <param name="ioDataSize">The size of the variable to output in bytes.</param>
         [DllImport(Constants.AudioUnitLibrary)]
         private static extern AudioUnitStatus AudioUnitGetProperty(IntPtr inUnit, int inID, AudioUnitScopeType inScope, uint inElement, ref uint outData, ref uint ioDataSize);
+
+        /// <summary>
+        /// Sets a property on the audio unit.
+        /// </summary>
+        /// <returns>An <see cref="T:AudioUnit.AudioUnitStatus"/> indicating if setting the property was successful or not.</returns>
+        /// <param name="inUnit">The handle of the audio unit to set the property on.</param>
+        /// <param name="inID">The identifier for the property to be set.</param>
+        /// <param name="inScope">The scope of the audio unit property.</param>
+        /// <param name="inElement">The audio unit element to set the property on.</param>
+        /// <param name="inData">The value the property is being set to.</param>
+        /// <param name="inDataSize">The size of the property value in bytes.</param>
+        [DllImport(Constants.AudioUnitLibrary)]
+        private static extern AudioUnitStatus AudioUnitSetProperty(IntPtr inUnit, int inID, AudioUnitScopeType inScope, uint inElement, ref uint inData, uint inDataSize);
 
         /// <summary>
         /// Gets the data from an audio property.
@@ -105,6 +123,19 @@ namespace AudioCore.Mac.Common
         /// <param name="outData">The data being output.</param>
         [DllImport(Constants.AudioUnitLibrary)]
         private static extern AudioUnitStatus AudioObjectGetPropertyData(uint inObjectID, ref AudioObjectPropertyAddress inAddress, ref uint inQualifierDataSize, ref IntPtr inQualifierData, ref uint ioDataSize, out IntPtr outData);
+
+        /// <summary>
+        /// Gets the data from an audio property.
+        /// </summary>
+        /// <returns>An <see cref="T:AudioUnit.AudioUnitStatus"/> indicating if getting the property was successful or not.</returns>
+        /// <param name="inObjectID">The ID of the audio object to get a property from.</param>
+        /// <param name="inAddress">The <see cref="T:AudioCore.Mac.CoreAudioOutput.AudioObjectPropertyAddress"/> representing the property to be retrieved.</param>
+        /// <param name="inQualifierDataSize">The size of the input qualifier data.</param>
+        /// <param name="inQualifierData">The input qualifier data.</param>
+        /// <param name="ioDataSize">The size of the data being output.</param>
+        /// <param name="outData">The data being output.</param>
+        [DllImport(Constants.AudioUnitLibrary)]
+        private static extern AudioUnitStatus AudioObjectGetPropertyData(uint inObjectID, ref AudioObjectPropertyAddress inAddress, ref uint inQualifierDataSize, ref IntPtr inQualifierData, ref uint ioDataSize, out AudioValueRange outData);
 
         /// <summary>
         /// Gets the size of the data from an audio property.
@@ -148,6 +179,16 @@ namespace AudioCore.Mac.Common
                 Element = (uint)element;
             }
         }
+
+        /// <summary>
+        /// A range of values.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        private struct AudioValueRange
+        {
+            public double mMinimum;
+            public double mMaximum;
+        }
         #endregion
 
         #region AudioUnit Extension Methods
@@ -170,6 +211,23 @@ namespace AudioCore.Mac.Common
             }
             // Return the number of frames
             return bufferFrames;
+        }
+
+        /// <summary>
+        /// Sets the number of frames the output audio unit is buffering by.
+        /// </summary>
+        /// <returns>The number of frames the output audio unit should buffer by.</returns>
+        internal static void SetBufferFrames(this AudioUnit.AudioUnit audioUnit, uint bufferSize)
+        {
+            // The size in bytes of the data being set
+            uint size = sizeof(uint);
+            // Set the buffer frames property
+            AudioUnitStatus status = AudioUnitSetProperty(audioUnit.Handle, kAudioDevicePropertyBufferFrameSize, AudioUnitScopeType.Global, 0, ref bufferSize, size);
+            // If setting the property was not successful, throw an exception
+            if (status != AudioUnitStatus.NoError)
+            {
+                throw new Exception($"Unable to set the number of frames in the audio unit buffer - {status.ToString()}");
+            }
         }
 
         /// <summary>
@@ -386,6 +444,30 @@ namespace AudioCore.Mac.Common
             {
                 throw new Exception($"Unable to set audio power saving hint - {status.ToString()}");
             }
+        }
+
+        /// <summary>
+        /// Gets the range of buffer sizes allowed by an audio device.
+        /// </summary>
+        /// <returns>The name of the device.</returns>
+        /// <param name="deviceID">The identifier of the device to get the buffer range of.</param>
+        internal static (double minimum, double maximum) GetBufferRange(uint deviceID)
+        {
+            // Set the size of the data to be returned in bytes
+            uint propertySize = (uint)Marshal.SizeOf(typeof(AudioValueRange));
+            // Setup qualifier data to be used when retrieving the buffer range
+            uint inQualifierDataSize = 0;
+            IntPtr inQualifierData = IntPtr.Zero;
+            // Get the buffer range property
+            AudioObjectPropertyAddress propertyAddress = new AudioObjectPropertyAddress(kAudioDevicePropertyBufferFrameSizeRange, AudioObjectPropertyScope.Global, AudioObjectPropertyElement.Master);
+            AudioUnitStatus status = AudioObjectGetPropertyData(deviceID, ref propertyAddress, ref inQualifierDataSize, ref inQualifierData, ref propertySize, out AudioValueRange range);
+            // If getting the size of the range property was not successful, throw an exception
+            if (status != AudioUnitStatus.NoError)
+            {
+                throw new Exception($"Unable to retrieve the number of devices - {status.ToString()}");
+            }
+            // Return the range of buffer sizes
+            return (range.mMinimum, range.mMaximum);
         }
         #endregion
     }

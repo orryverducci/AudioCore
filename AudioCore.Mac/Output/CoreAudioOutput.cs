@@ -26,20 +26,28 @@ namespace AudioCore.Mac.Output
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system default output device and settings.
         /// </summary>
-        public CoreAudioOutput() : this(-1, -1, -1) {}
+        public CoreAudioOutput() : this(-1, -1, -1, -1) {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system default output device and sample rate.
+        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system default output device, sample rate and buffer size.
         /// </summary>
         /// <param name="channels">The number of audio channels.</param>
-        public CoreAudioOutput(int channels) : this(-1, channels, -1) {}
+        public CoreAudioOutput(int channels) : this(-1, channels, -1, -1) {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system default output device.
+        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system default output device and buffer size.
         /// </summary>
         /// <param name="channels">The number of audio channels.</param>
         /// <param name="sampleRate">The audio sample rate in Hertz.</param>
-        public CoreAudioOutput(int channels, int sampleRate) : this(-1, channels, sampleRate) {}
+        public CoreAudioOutput(int channels, int sampleRate) : this(-1, channels, sampleRate, -1) {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class with the system default buffer size.
+        /// </summary>
+        /// <param name="deviceID">The ID of the audio output device to be used.</param>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <param name="sampleRate">The audio sample rate in Hertz.</param>
+        public CoreAudioOutput(long deviceID, int channels, int sampleRate) : this(deviceID, channels, sampleRate, -1) {}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Output.CoreAudioOutput"/> class.
@@ -47,7 +55,8 @@ namespace AudioCore.Mac.Output
         /// <param name="deviceID">The ID of the audio output device to be used.</param>
         /// <param name="channels">The number of audio channels.</param>
         /// <param name="sampleRate">The audio sample rate in Hertz.</param>
-        public CoreAudioOutput(long deviceID, int channels, int sampleRate)
+        /// <param name="bufferSize">The buffer size to be requested in frames.</param>
+        public CoreAudioOutput(long deviceID, int channels, int sampleRate, int bufferSize)
         {
             // Get the default output audio component
             AudioComponent audioOutputComponent = AudioComponent.FindComponent(AudioTypeOutput.HAL);
@@ -103,7 +112,12 @@ namespace AudioCore.Mac.Output
             }
             // Initialise audio unit
             _audioUnit.Initialize();
-            // Set the output buffer size
+            // Set the output buffer size if not set to use the system default
+            if (bufferSize != -1)
+            {
+                _audioUnit.SetBufferFrames((uint)bufferSize);
+            }
+            // Set the output buffer size property
             BufferSize = (int)_audioUnit.GetBufferFrames();
             // Set the latency
             Latency = (int)Math.Round((1000f / SampleRate) * (_audioUnit.GetLatency() + _audioUnit.GetDeviceLatency() + _audioUnit.GetSafetyOffset() + BufferSize));
@@ -184,6 +198,17 @@ namespace AudioCore.Mac.Output
             }
             // Return the list of devices
             return devices;
+        }
+
+        /// <summary>
+        /// Gets the minimum and maximum buffer sizes allowed by an audio device.
+        /// </summary>
+        /// <param name="deviceID">The id of the audio device to get the range of buffer sizes for.</param>
+        /// <returns>A tuple contining the minimum and maximum buffer sizes allowed.</returns>
+        public static (int minimum, int maximum) GetBufferRange(uint deviceID)
+        {
+            (double minimum, double maximum) range = AudioUnitExtensions.GetBufferRange(deviceID);
+            return ((int)range.minimum, (int)range.maximum);
         }
         #endregion
 
