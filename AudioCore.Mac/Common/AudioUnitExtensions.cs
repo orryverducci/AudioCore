@@ -434,12 +434,12 @@ namespace AudioCore.Mac.Common
             {
                 powerHint = kAudioHardwarePowerHintNone;
             }
-            // Setup qualifier data to be used when retrieving the power saving hint
+            // Setup qualifier data to be used when setting the power saving hint
             IntPtr inQualifierData = IntPtr.Zero;
             // Set the power saving hint
             AudioObjectPropertyAddress propertyAddress = new AudioObjectPropertyAddress((uint)AudioObjectPropertySelector.PowerHint, AudioObjectPropertyScope.Global, AudioObjectPropertyElement.Master);
             AudioUnitStatus status = AudioObjectSetPropertyData(kAudioObjectSystemObject, ref propertyAddress, 0, ref inQualifierData, (uint)Marshal.SizeOf(typeof(uint)), ref powerHint);
-            // If getting the property data was not successful, throw an exception
+            // If setting the property data was not successful, throw an exception
             if (status != AudioUnitStatus.NoError)
             {
                 throw new Exception($"Unable to set audio power saving hint - {status.ToString()}");
