@@ -193,17 +193,18 @@ namespace AudioCore.Mac.Common
 
         #region AudioUnit Extension Methods
         /// <summary>
-        /// Gets the number of frames the output audio unit is buffering by.
+        /// Gets the number of frames the audio unit is buffering by.
         /// </summary>
         /// <returns>The number of frames in the buffer.</returns>
-        internal static uint GetBufferFrames(this AudioUnit.AudioUnit audioUnit)
+        /// <param name="scope">The audio scope to get the number of frames in the buffer from.</param>
+        internal static uint GetBufferFrames(this AudioUnit.AudioUnit audioUnit, AudioUnitScopeType scope)
         {
             // The size in bytes of the data to be returned
             uint size = sizeof(uint);
             // The number of frames to be returned, defaulting to 0
             uint bufferFrames = 0;
             // Get the buffer frames property
-            AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertyBufferFrameSize, AudioUnitScopeType.Global, 0, ref bufferFrames, ref size);
+            AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertyBufferFrameSize, scope, 0, ref bufferFrames, ref size);
             // If getting the property was not successful, throw an exception
             if (status != AudioUnitStatus.NoError)
             {
@@ -214,15 +215,16 @@ namespace AudioCore.Mac.Common
         }
 
         /// <summary>
-        /// Sets the number of frames the output audio unit is buffering by.
+        /// Sets the number of frames the audio unit is buffering by.
         /// </summary>
         /// <returns>The number of frames the output audio unit should buffer by.</returns>
-        internal static void SetBufferFrames(this AudioUnit.AudioUnit audioUnit, uint bufferSize)
+        /// <param name="scope">The audio scope on which to set the number of frames the audio unit shoudl buffer by.</param>
+        internal static void SetBufferFrames(this AudioUnit.AudioUnit audioUnit, uint bufferSize, AudioUnitScopeType scope)
         {
             // The size in bytes of the data being set
             uint size = sizeof(uint);
             // Set the buffer frames property
-            AudioUnitStatus status = AudioUnitSetProperty(audioUnit.Handle, kAudioDevicePropertyBufferFrameSize, AudioUnitScopeType.Global, 0, ref bufferSize, size);
+            AudioUnitStatus status = AudioUnitSetProperty(audioUnit.Handle, kAudioDevicePropertyBufferFrameSize, scope, 0, ref bufferSize, size);
             // If setting the property was not successful, throw an exception
             if (status != AudioUnitStatus.NoError)
             {
@@ -234,14 +236,15 @@ namespace AudioCore.Mac.Common
         /// Gets the latency of the device in number of frames.
         /// </summary>
         /// <returns>The latency of the device in number of frames.</returns>
-        internal static uint GetDeviceLatency(this AudioUnit.AudioUnit audioUnit)
+        /// <param name="scope">The audio scope to get the device latency from.</param>
+        internal static uint GetDeviceLatency(this AudioUnit.AudioUnit audioUnit, AudioUnitScopeType scope)
         {
             // The size in bytes of the data to be returned
             uint size = sizeof(uint);
             // The latency of the device, defaulting to 0
             uint latency = 0;
             // Get the device latency property
-            AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertyLatency, AudioUnitScopeType.Global, 0, ref latency, ref size);
+            AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertyLatency, scope, 0, ref latency, ref size);
             // If getting the property was not successful, throw an exception
             if (status != AudioUnitStatus.NoError)
             {
@@ -255,14 +258,15 @@ namespace AudioCore.Mac.Common
         /// Gets the safety offset of the device in number of frames.
         /// </summary>
         /// <returns>The safety offset of the device in number of frames.</returns>
-        internal static uint GetSafetyOffset(this AudioUnit.AudioUnit audioUnit)
+        /// <param name="scope">The audio scope to get the safety offset from.</param>
+        internal static uint GetSafetyOffset(this AudioUnit.AudioUnit audioUnit, AudioUnitScopeType scope)
         {
             // The size in bytes of the data to be returned
             uint size = sizeof(uint);
             // The safety offset, defaulting to 0
             uint safetyOffset = 0;
             // Get the safety offset property
-            AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertySafetyOffset, AudioUnitScopeType.Global, 0, ref safetyOffset, ref size);
+            AudioUnitStatus status = AudioUnitGetProperty(audioUnit.Handle, kAudioDevicePropertySafetyOffset, scope, 0, ref safetyOffset, ref size);
             // If getting the property was not successful, throw an exception
             if (status != AudioUnitStatus.NoError)
             {

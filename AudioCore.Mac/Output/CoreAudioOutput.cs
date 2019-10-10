@@ -115,12 +115,12 @@ namespace AudioCore.Mac.Output
             // Set the output buffer size if not set to use the system default
             if (bufferSize != -1)
             {
-                _audioUnit.SetBufferFrames((uint)bufferSize);
+                _audioUnit.SetBufferFrames((uint)bufferSize, AudioUnitScopeType.Output);
             }
             // Set the output buffer size property
-            BufferSize = (int)_audioUnit.GetBufferFrames();
+            BufferSize = (int)_audioUnit.GetBufferFrames(AudioUnitScopeType.Output);
             // Set the latency
-            Latency = (int)Math.Round((1000f / SampleRate) * (_audioUnit.GetLatency() + _audioUnit.GetDeviceLatency() + _audioUnit.GetSafetyOffset() + BufferSize));
+            Latency = (int)Math.Round((1000f / SampleRate) * (_audioUnit.GetLatency() + _audioUnit.GetDeviceLatency(AudioUnitScopeType.Output) + _audioUnit.GetSafetyOffset(AudioUnitScopeType.Output) + BufferSize));
         }
 
         /// <summary>
