@@ -105,13 +105,6 @@ namespace AudioCore.Mac.Output
                 BitsPerChannel = 32
             };
             _audioUnit.SetFormat(streamFormat, AudioUnitScopeType.Input, 0);
-            // Set render callback, and check there's no error
-            if (_audioUnit.SetRenderCallback(RenderAudio, AudioUnitScopeType.Input, 0) != AudioUnitStatus.NoError)
-            {
-                throw new Exception("Unable to setup audio output render callback.");
-            }
-            // Initialise audio unit
-            _audioUnit.Initialize();
             // Set the output buffer size if not set to use the system default
             if (bufferSize != -1)
             {
@@ -119,6 +112,13 @@ namespace AudioCore.Mac.Output
             }
             // Set the output buffer size property
             BufferSize = (int)_audioUnit.GetBufferFrames(AudioUnitScopeType.Output);
+            // Set render callback, and check there's no error
+            if (_audioUnit.SetRenderCallback(RenderAudio, AudioUnitScopeType.Input, 0) != AudioUnitStatus.NoError)
+            {
+                throw new Exception("Unable to setup audio output render callback.");
+            }
+            // Initialise audio unit
+            _audioUnit.Initialize();
             // Set the latency
             Latency = (int)Math.Round((1000f / SampleRate) * (_audioUnit.GetLatency() + _audioUnit.GetDeviceLatency(AudioUnitScopeType.Output) + _audioUnit.GetSafetyOffset(AudioUnitScopeType.Output) + BufferSize));
         }
