@@ -13,7 +13,7 @@ namespace AudioCore.Mac.Input
     /// <summary>
     /// Provides input from an audio device on macOS via the Core Audio API.
     /// </summary>
-    public class CoreAudioInput : BufferedAudioInput, IDisposable
+    public class CoreAudioInput : HardwareAudioInput, IDisposable
     {
         #region Private Fields
         /// <summary>

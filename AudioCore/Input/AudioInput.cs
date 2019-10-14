@@ -20,11 +20,6 @@ namespace AudioCore.Input
         private int _sampleRate;
 
         /// <summary>
-        /// The latency on the audio in milliseconds.
-        /// </summary>
-        private int _latency;
-
-        /// <summary>
         /// The current playback state.
         /// </summary>
         private PlaybackState _playbackState = PlaybackState.STOPPED;
@@ -61,22 +56,6 @@ namespace AudioCore.Input
                     throw new ArgumentOutOfRangeException(nameof(value), "The sample rate must be greater than 0.");
                 }
                 _sampleRate = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets the latency on the audio in milliseconds.
-        /// </summary>
-        /// <value>The audio latency.</value>
-        public int Latency {
-            get => _latency;
-            protected set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), "The latency must be greater than 0.");
-                }
-                _latency = value;
             }
         }
 
