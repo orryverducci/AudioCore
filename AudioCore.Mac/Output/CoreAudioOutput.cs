@@ -13,7 +13,7 @@ namespace AudioCore.Mac.Output
     /// <summary>
     /// Provides audio output on macOS via the Core Audio API.
     /// </summary>
-    public class CoreAudioOutput : AudioOutput, IDisposable
+    public class CoreAudioOutput : HardwareAudioOutput, IDisposable
     {
         #region Private Fields
         /// <summary>
