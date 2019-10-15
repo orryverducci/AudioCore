@@ -24,6 +24,32 @@ namespace AudioCore.Mac.Input
 
         #region Constructor and Dispose
         /// <summary>
+        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Input.CoreAudioInput"/> class with the system default input device and settings.
+        /// </summary>
+        public CoreAudioInput() : this(-1, -1, -1, -1) {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Input.CoreAudioInput"/> class with the system default input device, sample rate and buffer size.
+        /// </summary>
+        /// <param name="channels">The number of audio channels.</param>
+        public CoreAudioInput(int channels) : this(-1, channels, -1, -1) {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Input.CoreAudioInput"/> class with the system default input device buffer size.
+        /// </summary>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <param name="sampleRate">The audio sample rate in Hertz.</param>
+        public CoreAudioInput(int channels, int sampleRate) : this(-1, channels, sampleRate, -1) {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Input.CoreAudioInput"/> class with the system default buffer size.
+        /// </summary>
+        /// <param name="deviceID">The ID of the audio input device to be used.</param>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <param name="sampleRate">The audio sample rate in Hertz.</param>
+        public CoreAudioInput(long deviceID, int channels, int sampleRate) : this(deviceID, channels, sampleRate, -1) {}
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Mac.Input.CoreAudioInput"/> class.
         /// </summary>
         /// <param name="deviceID">The ID of the audio input device to be used.</param>
