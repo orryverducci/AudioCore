@@ -29,7 +29,8 @@ namespace AudioCore.Mac.Input
         /// <param name="deviceID">The ID of the audio input device to be used.</param>
         /// <param name="channels">The number of audio channels.</param>
         /// <param name="sampleRate">The audio sample rate in Hertz.</param>
-        public CoreAudioInput(long deviceID, int channels, int sampleRate)
+        /// <param name="bufferSize">The hardware buffer size to be requested in frames.</param>
+        public CoreAudioInput(long deviceID, int channels, int sampleRate, int bufferSize)
         {
             // Get the default output audio component, the CoreAudio API requires an output audio unit for input
             AudioComponent audioOutputComponent = AudioComponent.FindComponent(AudioTypeOutput.HAL);
@@ -81,6 +82,13 @@ namespace AudioCore.Mac.Input
                 BitsPerChannel = 32
             };
             _audioUnit.SetFormat(streamFormat, AudioUnitScopeType.Output, 1);
+            // Set the input hardware buffer size if not set to use the system default
+            if (bufferSize != -1)
+            {
+                _audioUnit.SetBufferFrames((uint)bufferSize, AudioUnitScopeType.Input);
+            }
+            // Set the input hardware buffer size property
+            HardwareBufferSize = (int)_audioUnit.GetBufferFrames(AudioUnitScopeType.Input);
             // Set input callback, and check there's no error
             if (_audioUnit.SetInputCallback(RetrieveAudio, AudioUnitScopeType.Global, 1) != AudioUnitStatus.NoError)
             {
@@ -88,6 +96,8 @@ namespace AudioCore.Mac.Input
             }
             // Initialise audio unit
             _audioUnit.Initialize();
+            // Set the latency
+            Latency = (int)Math.Round((1000f / SampleRate) * (_audioUnit.GetLatency() + _audioUnit.GetDeviceLatency(AudioUnitScopeType.Input) + _audioUnit.GetSafetyOffset(AudioUnitScopeType.Input) + HardwareBufferSize));
         }
 
         /// <summary>

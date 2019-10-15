@@ -19,7 +19,7 @@ namespace AudioCore.Demo
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Demo.PlatformInput"/> class.
         /// </summary>
-        public PlatformInput(long deviceID) => Input = new CoreAudioInput(deviceID, -1, -1);
+        public PlatformInput(long deviceID) => Input = new CoreAudioInput(deviceID, -1, -1, -1);
 
         /// <summary>
         /// Releases all resource used by the <see cref="T:AudioCore.Demo.PlatformInput"/> object.
