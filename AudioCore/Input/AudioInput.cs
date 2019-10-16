@@ -47,7 +47,8 @@ namespace AudioCore.Input
         /// Gets the audio sample rate in Hertz
         /// </summary>
         /// <value>The audio sample rate in Hertz.</value>
-        public int SampleRate {
+        public int SampleRate
+        {
             get => _sampleRate;
             protected set
             {
@@ -69,7 +70,8 @@ namespace AudioCore.Input
         /// Gets the current playback state.
         /// </summary>
         /// <value>Whether the audio input is playing or not.</value>
-        public PlaybackState PlaybackState {
+        public PlaybackState PlaybackState
+        {
             get => _playbackState;
             protected set
             {
