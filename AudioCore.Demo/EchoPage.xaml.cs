@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
 using AudioCore.Common;
+using AudioCore.Output;
 
 namespace AudioCore.Demo
 {

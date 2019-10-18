@@ -61,6 +61,7 @@
     <Compile Include="Input\CoreAudioInput.cs" />
     <Compile Include="Common\AudioUnitExtensions.cs" />
     <Compile Include="PowerSaving.cs" />
+    <Compile Include="PlatformOutput.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AudioCore\AudioCore.csproj">
