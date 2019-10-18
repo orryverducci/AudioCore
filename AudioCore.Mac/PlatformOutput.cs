@@ -9,7 +9,7 @@ namespace AudioCore.Output
     /// <summary>
     /// Provides an audio device output for the current platform.
     /// </summary>
-    public class PlatformOutput
+    public class PlatformOutput : IDisposable
     {
         #region Private Fields
         /// <summary>
