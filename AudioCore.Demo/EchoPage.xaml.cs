@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
 using AudioCore.Common;
+using AudioCore.Input;
 using AudioCore.Output;
 
 namespace AudioCore.Demo
@@ -97,7 +98,7 @@ namespace AudioCore.Demo
                     BufferSize = _output.BufferSize
                 };
                 // Add the input to the output
-                _output.AddInput(_input.Input);
+                _output.AddInput(_input);
                 // Start playback
                 _output.Start();
                 _input.Start();
