@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using AudioCore.Common;
 using AudioCore.Input;
@@ -74,6 +75,12 @@ namespace AudioCore.Output
         public AudioFormat Format { get; protected set; }
 
         /// <summary>
+        /// Gets a read only list of the audio inputs that have been added to the output.
+        /// </summary>
+        /// <value>A read only list of audio inputs.</value>
+        public ReadOnlyCollection<AudioInput> Inputs { get; protected set; }
+
+        /// <summary>
         /// Gets the current playback state.
         /// </summary>
         /// <value>Whether the audio output is playing or not.</value>
@@ -93,6 +100,16 @@ namespace AudioCore.Output
         /// Occurs when the playback state property changes.
         /// </summary>
         public event EventHandler PlaybackStateChanged;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:AudioCore.Output.AudioOutput"/> class.
+        /// </summary>
+        public AudioOutput()
+        {
+            Inputs = _audioInputs.AsReadOnly();
+        }
         #endregion
 
         #region Methods
