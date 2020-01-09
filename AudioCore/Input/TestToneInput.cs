@@ -21,6 +21,13 @@ namespace AudioCore.Input
         }
         #endregion
 
+        #region Constants
+        /// <summary>
+        /// Math constant representing 2 * pi.
+        /// </summary>
+        private const float Tau = 2 * MathF.PI;
+        #endregion
+
         #region Private Fields
         /// <summary>
         /// The frequency of the test tone in Hertz.
@@ -125,15 +132,15 @@ namespace AudioCore.Input
                 {
                     case ToneType.SineWave:
                         // y = sin(2 * pi * frequency * x)
-                        sample = MathF.Sin(2 * MathF.PI * Frequency * ((float)_frameNumber / (float)SampleRate)) * _volumeLinear;
+                        sample = MathF.Sin(Tau * Frequency * ((float)_frameNumber / (float)SampleRate)) * _volumeLinear;
                         break;
                     case ToneType.SquareWave:
                         // Same as sine wave, but encased in a sign function
-                        sample = MathF.Sign(MathF.Sin(2 * MathF.PI * Frequency * ((float)_frameNumber / (float)SampleRate))) * _volumeLinear;
+                        sample = MathF.Sign(MathF.Sin(Tau * Frequency * ((float)_frameNumber / (float)SampleRate))) * _volumeLinear;
                         break;
                     case ToneType.SawtoothWave:
                         // y = -((2 * amplitude) / pi) * arctan(cot(x * pi / period))
-                        sample = ((-2 / MathF.PI) * MathF.Atan(1f / MathF.Tan((_frameNumber * MathF.PI) / ((float)SampleRate / (float)Frequency)))) * _volumeLinear;
+                        sample = ((-Tau) * MathF.Atan(1f / MathF.Tan((_frameNumber * MathF.PI) / ((float)SampleRate / (float)Frequency)))) * _volumeLinear;
                         break;
                     case ToneType.TriangleWave:
                         // y = abs(2 * frequency * x % 2 - 1) * amplitude - offset
