@@ -4,7 +4,7 @@ using AudioCore.Common;
 namespace AudioCore.Input
 {
     /// <summary>
-    /// Provides an audio input generated from a continuous sine wave test tone.
+    /// Provides an audio input generated from a continuous test tone.
     /// </summary>
     public class TestToneInput : AudioInput
     {
@@ -119,7 +119,7 @@ namespace AudioCore.Input
             // Generate audio for frames requested
             for (int i = 0; i < (framesRequested); i++)
             {
-                // Increase the sine wave sample number by 1
+                // Increase the sine wave frame number by 1
                 _frameNumber++;
                 // If the sample reaches the sample rate, reset sample number
                 if (_frameNumber > SampleRate)
