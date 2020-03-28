@@ -35,6 +35,9 @@ bld/
 # Visual Studio 2017 auto generated files
 Generated\ Files/
 
+# Ignore Xamarin.Android Resource.Designer.cs files
+[Rr]esource.[Dd]esigner.cs
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
