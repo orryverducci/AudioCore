@@ -161,14 +161,15 @@ namespace AudioCore.Input
             {
                 // Get the number of samples that can be returned, which is the smaller of either the number requested or the number available
                 int samplesToReturn = Math.Min(_sampleCount, audioBuffer.Length);
-                // If playing and we've run out of samples, stop playback and start buffering
-                if (PlaybackState == PlaybackState.PLAYING && samplesToReturn == 0)
-                {
-                    PlaybackState = PlaybackState.BUFFERING;
-                }
                 // If playing keep copying samples until we've got all that can be returned
                 if (PlaybackState == PlaybackState.PLAYING)
                 {
+                    // If we've run out of samples, stop playback and start buffering
+                    if (samplesToReturn == 0)
+                    {
+                        PlaybackState = PlaybackState.BUFFERING;
+                        return;
+                    }
                     int samplesRead = 0;
                     while (samplesRead < samplesToReturn)
                     {
