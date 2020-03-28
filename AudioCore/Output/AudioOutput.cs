@@ -31,6 +31,11 @@ namespace AudioCore.Output
         /// The current playback state.
         /// </summary>
         private PlaybackState _playbackState = PlaybackState.STOPPED;
+
+        /// <summary>
+        /// The buffer to be passed to the inputs for them to fill with frames of audio.
+        /// </summary>
+        private float[] _inputBuffer;
         #endregion
 
         #region Properties
@@ -162,30 +167,36 @@ namespace AudioCore.Output
         /// <summary>
         /// Get frames of audio from the audio inputs.
         /// </summary>
+        /// <param name="audioBuffer">The buffer of audio samples which will be played by the audio output.</param>
         /// <param name="framesRequired">The number of frames required.</param>
-        protected float[] GetInputFrames(int framesRequired)
+        protected void GetInputFrames(Span<float> audioBuffer, int framesRequired)
         {
-            // Create array of mixed (combined) frames
-            float[] mixedFrames = new float[framesRequired * Channels];
+            // Clear the output frame buffer
+            audioBuffer.Clear();
+            // Check the input buffer is the same size as the frame buffer, and change it if it isn't
+            if (_inputBuffer == null || _inputBuffer.Length != audioBuffer.Length)
+            {
+                _inputBuffer = new float[audioBuffer.Length];
+            }
+            // Wrap the input buffer in a span
+            Span<float> inputBuffer = _inputBuffer.AsSpan();
             // Get samples from each input that is playing
             foreach (var input in _audioInputs)
             {
                 // Only get frames from the input if it is currently playing
                 if (input.PlaybackState == PlaybackState.PLAYING)
                 {
+                    // Clear the input buffer
+                    inputBuffer.Clear();
                     // Get frames from the audio input
-                    float[] inputFrames = input.GetFrames(framesRequired);
-                    // Get the shorter length from the returned frames array or the mixed frames array
-                    int mixLength = (inputFrames.Length < mixedFrames.Length) ? inputFrames.Length : mixedFrames.Length;
-                    // Add the frames from the audio input to the mixed frames
-                    for (int i = 0; i < mixLength; i++)
+                    input.GetFrames(inputBuffer, framesRequired);
+                    // Add the frames from the audio input to the output frame buffer
+                    for (int i = 0; i < audioBuffer.Length; i++)
                     {
-                        mixedFrames[i] += inputFrames[i];
+                        audioBuffer[i] += inputBuffer[i];
                     }
                 }
             }
-            // Return the mixed samples
-            return mixedFrames;
         }
         #endregion
     }

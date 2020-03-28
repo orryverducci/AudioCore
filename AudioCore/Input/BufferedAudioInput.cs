@@ -152,16 +152,15 @@ namespace AudioCore.Input
         /// Get frames of audio samples from the input.
         /// </summary>
         /// <returns>The audio samples.</returns>
+        /// <param name="audioBuffer">The buffer of audio samples to be filled by the input.</param>
         /// <param name="framesRequested">The number of frames required.</param>
-        public override float[] GetFrames(int framesRequested)
+        public override void GetFrames(Span<float> audioBuffer, int framesRequested)
         {
-            // Create an array of samples to be returned
-            float[] samples = new float[framesRequested * Channels];
             // Copy the samples from the buffer
             lock (_lock)
             {
                 // Get the number of samples that can be returned, which is the smaller of either the number requested or the number available
-                int samplesToReturn = Math.Min(_sampleCount, samples.Length);
+                int samplesToReturn = Math.Min(_sampleCount, audioBuffer.Length);
                 // If playing and we've run out of samples, stop playback and start buffering
                 if (PlaybackState == PlaybackState.PLAYING && samplesToReturn == 0)
                 {
@@ -175,8 +174,12 @@ namespace AudioCore.Input
                     {
                         // Determine the number of samples that can be read before the end of the buffer has been reached
                         int samplesToRead = Math.Min(_buffer.Length - _readPosition, samplesToReturn - samplesRead);
-                        // Copy samples from the buffer to the samples to be returned
-                        Array.Copy(_buffer, _readPosition, samples, samplesRead, samplesToRead);
+                        // Get a span representing the samples to be copied from the buffer
+                        Span<float> bufferSamples = _buffer.AsSpan(_readPosition, samplesToRead);
+                        // Get a span representing the section of the output audio buffer the samples are to be copied to
+                        Span<float> audioBufferSlice = audioBuffer.Slice(samplesRead, samplesToRead);
+                        // Copy samples from the buffer to the output
+                        bufferSamples.CopyTo(audioBufferSlice);
                         samplesRead += samplesToRead;
                         _readPosition += samplesToRead;
                         // If the end of the buffer has been reached, wrap the read position round to the start
@@ -188,8 +191,6 @@ namespace AudioCore.Input
                     _sampleCount -= samplesRead;
                 }
             }
-            // Return the samples
-            return samples;
         }
 
         /// <summary>

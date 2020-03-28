@@ -224,12 +224,14 @@ namespace AudioCore.Mac.Output
         /// <param name="buffers">The output audio buffer.</param>
         private AudioUnitStatus RenderAudio(AudioUnitRenderActionFlags actionFlags, AudioTimeStamp timeStamp, uint busNumber, uint framesRequired, AudioBuffers buffers)
         {
+            // Wrap the audio buffer in a span
+            Span<float> audioBuffer;
+            unsafe
+            {
+                audioBuffer = new Span<float>(buffers[0].Data.ToPointer(), (int)framesRequired * Channels);
+            }
             // Get frames to be output
-            float[] frames = GetInputFrames((int)framesRequired);
-            // Convert frames to bytes
-            byte[] convertedFrames = BitDepthConverter.ToFloat(frames);
-            // Output the audio
-            Marshal.Copy(convertedFrames, 0, buffers[0].Data, convertedFrames.Length);
+            GetInputFrames(audioBuffer, (int)framesRequired);
             // Return that there was no error
             return AudioUnitStatus.NoError;
         }

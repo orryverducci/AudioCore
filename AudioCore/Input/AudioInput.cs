@@ -93,8 +93,9 @@ namespace AudioCore.Input
         /// Get frames of audio samples from the input.
         /// </summary>
         /// <returns>The audio samples.</returns>
+        /// <param name="audioBuffer">The buffer of audio samples to be filled by the input.</param>
         /// <param name="framesRequested">The number of frames required.</param>
-        public abstract float[] GetFrames(int framesRequested);
+        public abstract void GetFrames(Span<float> audioBuffer, int framesRequested);
         #endregion
     }
 }

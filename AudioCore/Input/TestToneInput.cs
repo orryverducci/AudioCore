@@ -111,11 +111,10 @@ namespace AudioCore.Input
         /// Get test tone audio frames.
         /// </summary>
         /// <returns>The test tone audio frames.</returns>
+        /// <param name="audioBuffer">The buffer of audio samples to be filled by the input.</param>
         /// <param name="framesRequested">The number of frames required.</param>
-        public override float[] GetFrames(int framesRequested)
+        public override void GetFrames(Span<float> audioBuffer, int framesRequested)
         {
-            // Create array of samples
-            float[] audio = new float[framesRequested * Channels];
             // Generate audio for frames requested
             for (int i = 0; i < (framesRequested); i++)
             {
@@ -151,11 +150,9 @@ namespace AudioCore.Input
                 int firstChannelSample = i * Channels;
                 for (int x = 0; x < Channels; x++)
                 {
-                    audio[firstChannelSample + x] = sample;
+                    audioBuffer[firstChannelSample + x] = sample;
                 }
             }
-            // Return samples
-            return audio;
         }
         #endregion
     }
