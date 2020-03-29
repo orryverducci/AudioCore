@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AudioCore.Common;
 
 namespace AudioCore.Input
@@ -142,11 +143,11 @@ namespace AudioCore.Input
                     {
                         throw new InvalidOperationException("The audio buffer has overflowed.");
                     }
-                    BufferOverflow?.Invoke(this, null);
+                    Task.Run(() => BufferOverflow?.Invoke(this, null)).ConfigureAwait(false);
                 }
             }
             // Fire data available event
-            SamplesAvailable?.Invoke(this, null);
+            Task.Run(() => SamplesAvailable?.Invoke(this, null)).ConfigureAwait(false);
         }
 
         /// <summary>
