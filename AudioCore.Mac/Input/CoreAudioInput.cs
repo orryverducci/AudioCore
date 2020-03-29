@@ -20,6 +20,11 @@ namespace AudioCore.Mac.Input
         /// The input audio unit.
         /// </summary>
         private AudioUnit.AudioUnit _audioUnit;
+
+        /// <summary>
+        /// An audio buffer to be filled by the input.
+        /// </summary>
+        AudioBuffers _buffer = new AudioBuffers(1);
         #endregion
 
         #region Constructor and Dispose
@@ -217,16 +222,16 @@ namespace AudioCore.Mac.Input
         /// <param name="audioUnit">The audio unit.</param>
         private AudioUnitStatus RetrieveAudio(AudioUnitRenderActionFlags actionFlags, AudioTimeStamp timeStamp, uint busNumber, uint framesAvailable, AudioUnit.AudioUnit audioUnit)
         {
-            // Create an audio buffer to be filled by the input
-            AudioBuffers buffer = new AudioBuffers(1);
             // Get the audio samples
-            audioUnit.Render(ref actionFlags, timeStamp, busNumber, framesAvailable, buffer);
-            // Convert the sample to doubles
-            byte[] data = new byte[framesAvailable * Channels * 4];
-            Marshal.Copy(buffer[0].Data, data, 0, data.Length);
-            float[] samples = BitDepthConverter.FromFloat(data);
+            audioUnit.Render(ref actionFlags, timeStamp, busNumber, framesAvailable, _buffer);
+            // Wrap the audio sample data in a span of floats
+            Span<float> samples;
+            unsafe
+            {
+                samples = new Span<float>(_buffer[0].Data.ToPointer(), (int)framesAvailable * Channels);
+            }
             // Write the samples to the buffer
-            Write(samples);
+            Write(samples.ToArray());
             // Return that there was no error
             return AudioUnitStatus.NoError;
         }
