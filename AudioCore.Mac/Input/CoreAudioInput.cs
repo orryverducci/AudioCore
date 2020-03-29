@@ -231,7 +231,7 @@ namespace AudioCore.Mac.Input
                 samples = new Span<float>(_buffer[0].Data.ToPointer(), (int)framesAvailable * Channels);
             }
             // Write the samples to the buffer
-            Write(samples.ToArray());
+            Write(samples);
             // Return that there was no error
             return AudioUnitStatus.NoError;
         }

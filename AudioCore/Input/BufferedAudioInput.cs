@@ -100,7 +100,7 @@ namespace AudioCore.Input
         /// Writes audio samples to the buffer.
         /// </summary>
         /// <param name="samples">The samples to be written.</param>
-        protected void Write(float[] samples)
+        protected void Write(Span<float> samples)
         {
             // Check the buffer has been initialised
             if (_buffer == null)
@@ -119,7 +119,8 @@ namespace AudioCore.Input
                     // Determine the number of samples that can be written before the end of the buffer has been reached
                     int samplesToWrite = Math.Min(_buffer.Length - _writePosition, samples.Length - samplesWritten);
                     // Write to the buffer the samples that can be written
-                    Array.Copy(samples, samplesWritten, _buffer, _writePosition, samplesToWrite);
+                    Span<float> bufferSlice = _buffer.AsSpan().Slice(_writePosition, samplesToWrite);
+                    samples.Slice(samplesWritten, samplesToWrite).CopyTo(bufferSlice);
                     samplesWritten += samplesToWrite;
                     _writePosition += samplesToWrite;
                     // If the end of the buffer has been reached, wrap the write position round to the start
