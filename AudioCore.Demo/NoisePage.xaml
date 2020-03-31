@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<local:DemoPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:AudioCore.Demo" x:Class="AudioCore.Demo.NoisePage" NavigationPage.HasNavigationBar="false" Title="Noise Input" Padding="20">
+    <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Output Device" Grid.Row="0" Grid.Column="0" />
+            <Picker x:Name="outputPicker" Grid.Row="0" Grid.Column="1" />
+            <Label Text="Type" Grid.Row="1" Grid.Column="0" />
+            <Picker x:Name="typePicker" Grid.Row="1" Grid.Column="1" SelectedIndexChanged="NoiseChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>White Noise</x:String>
+                        <x:String>Pink Noise</x:String>
+                        <x:String>Brown Noise</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+            </Picker>
+            <Label Text="Volume" Grid.Row="2" Grid.Column="0" />
+            <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Grid.Row="2" Grid.Column="1" ValueChanged="VolumeChanged" />
+        </Grid>
+        <Button x:Name="playbackButton" Text="Play" Clicked="PlaybackButtonClicked" HorizontalOptions="Start" />
+    </StackLayout>
+</local:DemoPage>

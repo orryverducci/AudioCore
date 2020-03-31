@@ -17,6 +17,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)NoisePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
@@ -36,5 +40,8 @@
       <DependentUpon>EchoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)DemoPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NoisePage.xaml.cs">
+      <DependentUpon>NoisePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
