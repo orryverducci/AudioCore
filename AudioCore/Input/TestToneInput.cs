@@ -97,7 +97,7 @@ namespace AudioCore.Input
 
         #region Constructor
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:AudioCore.Foundation.TestToneInput"/> class.
+        /// Initializes a new instance of the <see cref="T:AudioCore.Input.TestToneInput"/> class.
         /// </summary>
         /// <param name="channels">The number of audio channels required.</param>
         /// <param name="sampleRate">The audio sample rate required in Hertz.</param>
