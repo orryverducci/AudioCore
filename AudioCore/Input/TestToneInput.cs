@@ -115,6 +115,8 @@ namespace AudioCore.Input
         /// <param name="framesRequested">The number of frames required.</param>
         public override void GetFrames(Span<float> audioBuffer, int framesRequested)
         {
+            // Initialise variable to store generated sample
+            float sample = 0;
             // Generate audio for frames requested
             for (int i = 0; i < (framesRequested); i++)
             {
@@ -126,7 +128,6 @@ namespace AudioCore.Input
                     _frameNumber = 1;
                 }
                 // Generate sample for the chosen type of wave
-                float sample = 0;
                 switch (Type)
                 {
                     case ToneType.SineWave:
