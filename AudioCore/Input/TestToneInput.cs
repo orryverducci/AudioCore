@@ -88,6 +88,11 @@ namespace AudioCore.Input
         /// </summary>
         /// <value>The type.</value>
         public ToneType Type { get; set; } = ToneType.SineWave;
+
+        /// <summary>
+        /// Gets or sets if the phase should be reversed every other channel.
+        /// </summary>
+        public bool ReversePhase { get; set; }
         #endregion
 
         #region Constructor
@@ -151,7 +156,14 @@ namespace AudioCore.Input
                 int firstChannelSample = i * Channels;
                 for (int x = 0; x < Channels; x++)
                 {
-                    audioBuffer[firstChannelSample + x] = sample;
+                    if (ReversePhase && x % 2 != 0)
+                    {
+                        audioBuffer[firstChannelSample + x] = -sample;
+                    }
+                    else
+                    {
+                        audioBuffer[firstChannelSample + x] = sample;
+                    }
                 }
             }
         }

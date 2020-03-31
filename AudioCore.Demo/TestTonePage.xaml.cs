@@ -39,6 +39,11 @@ namespace AudioCore.Demo
         /// The test tone volume.
         /// </summary>
         private int _volume;
+
+        /// <summary>
+        /// If the phase should be reversed every other channel.
+        /// </summary>
+        private bool _reversePhase;
         #endregion
 
         #region Constructor and Page Lifecycle Events
@@ -125,6 +130,20 @@ namespace AudioCore.Demo
         }
 
         /// <summary>
+        /// Handles the reverse phase check box being checked and unchecked.
+        /// </summary>
+        /// <param name="sender">The sending object.</param>
+        /// <param name="e">The event arguments.</param>
+        private void ReversePhaseChanged(object sender, CheckedChangedEventArgs e)
+        {
+            _reversePhase = phaseCheckBox.IsChecked;
+            if (_playing)
+            {
+                _testToneInput.ReversePhase = _reversePhase;
+            }
+        }
+
+        /// <summary>
         /// Handles the play/stop button being clicked or tapped.
         /// </summary>
         /// <param name="sender">The sending object.</param>
@@ -159,7 +178,8 @@ namespace AudioCore.Demo
                 {
                     Frequency = _frequency,
                     Type = _toneType,
-                    Volume = _volume
+                    Volume = _volume,
+                    ReversePhase = _reversePhase
                 };
                 // Add the test tone input to the output
                 _output.AddInput(_testToneInput);

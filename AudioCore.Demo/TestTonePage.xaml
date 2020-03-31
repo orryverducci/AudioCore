@@ -9,6 +9,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -33,6 +34,8 @@
             <Label BindingContext="{x:Reference frequencySlider}" Text="{Binding Value, StringFormat='{0:F0} Hz'}" HorizontalTextAlignment="End" Grid.Row="3" Grid.Column="1" />
             <Label Text="Volume" Grid.Row="4" Grid.Column="0" />
             <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Grid.Row="4" Grid.Column="1" ValueChanged="VolumeChanged" />
+            <Label Text="Reverse Even Channel Phase" Grid.Row="5" Grid.Column="0" />
+            <CheckBox x:Name="phaseCheckBox" Grid.Row="5" Grid.Column="1" CheckedChanged="ReversePhaseChanged" />
         </Grid>
         <Button x:Name="playbackButton" Text="Play" Clicked="PlaybackButtonClicked" HorizontalOptions="Start" />
     </StackLayout>
