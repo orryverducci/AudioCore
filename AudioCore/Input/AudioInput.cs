@@ -90,6 +90,28 @@ namespace AudioCore.Input
 
         #region Methods
         /// <summary>
+        /// Start playback from the audio input.
+        /// </summary>
+        public virtual void Start()
+        {
+            if (PlaybackState == PlaybackState.STOPPED)
+            {
+                PlaybackState = PlaybackState.PLAYING;
+            }
+        }
+
+        /// <summary>
+        /// Stop playback from the audio input.
+        /// </summary>
+        public virtual void Stop()
+        {
+            if (PlaybackState != PlaybackState.STOPPED)
+            {
+                PlaybackState = PlaybackState.STOPPED;
+            }
+        }
+
+        /// <summary>
         /// Get frames of audio samples from the input.
         /// </summary>
         /// <returns>The audio samples.</returns>

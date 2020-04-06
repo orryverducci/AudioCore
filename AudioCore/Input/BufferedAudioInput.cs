@@ -84,18 +84,6 @@ namespace AudioCore.Input
         public event EventHandler BufferOverflow;
         #endregion
 
-        #region Playback Methods
-        /// <summary>
-        /// Start the audio input.
-        /// </summary>
-        public abstract void Start();
-
-        /// <summary>
-        /// Stop the audio input.
-        /// </summary>
-        public abstract void Stop();
-        #endregion
-
         #region Buffer Methods
         /// <summary>
         /// Writes audio samples to the buffer.
