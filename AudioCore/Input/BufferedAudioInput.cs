@@ -182,6 +182,11 @@ namespace AudioCore.Input
                     _sampleCount -= samplesRead;
                 }
             }
+            // Apply gain to the samples
+            for (int i = 0; i < audioBuffer.Length; i++)
+            {
+                audioBuffer[i] = audioBuffer[i] * Gain;
+            }
         }
 
         /// <summary>

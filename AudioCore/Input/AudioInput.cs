@@ -23,6 +23,11 @@ namespace AudioCore.Input
         /// The current playback state.
         /// </summary>
         private PlaybackState _playbackState = PlaybackState.STOPPED;
+
+        /// <summary>
+        /// The set audio volume in dBFS.
+        /// </summary>
+        private int _volume;
         #endregion
 
         #region Properties
@@ -79,6 +84,28 @@ namespace AudioCore.Input
                 PlaybackStateChanged?.Invoke(this, null);
             }
         }
+
+        /// <summary>
+        /// Gets or sets the volume of the test tone in dBFS.
+        /// </summary>
+        /// <value>The volume of the noise in dBFS.</value>
+        public int Volume
+        {
+            get => _volume;
+            set
+            {
+                _volume = value;
+                // Calculate linear volume (between 0 and 1) from dBFS value
+                Gain = MathF.Pow(10, value / 20f);
+            }
+        }
+        #endregion
+
+        #region Protected Fields
+        /// <summary>
+        /// Gets the gain being applied to the audio.
+        /// </summary>
+        protected float Gain { get; private set; } = 1;
         #endregion
 
         #region Events

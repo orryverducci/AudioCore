@@ -27,16 +27,6 @@ namespace AudioCore.Input
         private Random _random = new Random();
 
         /// <summary>
-        /// The set audio volume in dBFS.
-        /// </summary>
-        private int _volumeDBFS;
-
-        /// <summary>
-        /// The set audio volume as a linear value.
-        /// </summary>
-        private float _volumeLinear = 1;
-
-        /// <summary>
         /// A buffer containing an array samples to be used when generating pink noise.
         /// </summary>
         private float[] _pinkNoiseBuffer = new float[7];
@@ -48,21 +38,6 @@ namespace AudioCore.Input
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets or sets the volume of the test tone in dBFS.
-        /// </summary>
-        /// <value>The volume of the noise in dBFS.</value>
-        public int Volume
-        {
-            get => _volumeDBFS;
-            set
-            {
-                _volumeDBFS = value;
-                // Calculate linear volume (between 0 and 1) from dBFS value
-                _volumeLinear = MathF.Pow(10, value / 20f);
-            }
-        }
-
         /// <summary>
         /// Gets or sets the type of noise to be generated. Set to white noise by default.
         /// </summary>
@@ -106,7 +81,7 @@ namespace AudioCore.Input
                 switch (Type)
                 {
                     case NoiseType.White:
-                        sample = whiteSample * _volumeLinear;
+                        sample = whiteSample * Gain;
                         break;
                     case NoiseType.Pink:
                         _pinkNoiseBuffer[0] = 0.99886f * _pinkNoiseBuffer[0] + whiteSample * 0.0555179f;
@@ -115,12 +90,12 @@ namespace AudioCore.Input
                         _pinkNoiseBuffer[3] = 0.86650f * _pinkNoiseBuffer[3] + whiteSample * 0.3104856f;
                         _pinkNoiseBuffer[4] = 0.55000f * _pinkNoiseBuffer[4] + whiteSample * 0.5329522f;
                         _pinkNoiseBuffer[5] = -0.7616f * _pinkNoiseBuffer[5] - whiteSample * 0.0168980f;
-                        sample = (_pinkNoiseBuffer[0] + _pinkNoiseBuffer[1] + _pinkNoiseBuffer[2] + _pinkNoiseBuffer[3] + _pinkNoiseBuffer[4] + _pinkNoiseBuffer[5] + _pinkNoiseBuffer[6] + whiteSample * 0.5362f) * 0.11f * _volumeLinear;
+                        sample = (_pinkNoiseBuffer[0] + _pinkNoiseBuffer[1] + _pinkNoiseBuffer[2] + _pinkNoiseBuffer[3] + _pinkNoiseBuffer[4] + _pinkNoiseBuffer[5] + _pinkNoiseBuffer[6] + whiteSample * 0.5362f) * 0.11f * Gain;
                         _pinkNoiseBuffer[6] = whiteSample * 0.115926f;
                         break;
                     case NoiseType.Brown:
                         _brownNoiseBuffer = (_brownNoiseBuffer + (0.02f * whiteSample)) / 1.02f;
-                        sample = _brownNoiseBuffer * 3.5f * _volumeLinear;
+                        sample = _brownNoiseBuffer * 3.5f * Gain;
                         break;
                 }
                 // Copy sample to each channel

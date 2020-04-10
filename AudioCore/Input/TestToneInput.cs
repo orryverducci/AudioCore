@@ -38,16 +38,6 @@ namespace AudioCore.Input
         /// The number of the current frame in the sine wave.
         /// </summary>
         private int _frameNumber;
-
-        /// <summary>
-        /// The set audio volume in dBFS.
-        /// </summary>
-        private int _volumeDBFS;
-
-        /// <summary>
-        /// The set audio volume as a linear value.
-        /// </summary>
-        private float _volumeLinear = 1;
         #endregion
 
         #region Properties
@@ -65,21 +55,6 @@ namespace AudioCore.Input
                     throw new ArgumentOutOfRangeException(nameof(value), "The frequency must be greater than 0.");
                 }
                 _frequency = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the volume of the test tone in dBFS.
-        /// </summary>
-        /// <value>The volume of the test tone in dBFS.</value>
-        public int Volume
-        {
-            get => _volumeDBFS;
-            set
-            {
-                _volumeDBFS = value;
-                // Calculate linear volume (between 0 and 1) from dBFS value
-                _volumeLinear = MathF.Pow(10, value / 20f);
             }
         }
 
@@ -137,19 +112,19 @@ namespace AudioCore.Input
                 {
                     case ToneType.SineWave:
                         // y = sin(2 * pi * frequency * x)
-                        sample = MathF.Sin(Tau * Frequency * ((float)_frameNumber / (float)SampleRate)) * _volumeLinear;
+                        sample = MathF.Sin(Tau * Frequency * ((float)_frameNumber / (float)SampleRate)) * Gain;
                         break;
                     case ToneType.SquareWave:
                         // Same as sine wave, but encased in a sign function
-                        sample = MathF.Sign(MathF.Sin(Tau * Frequency * ((float)_frameNumber / (float)SampleRate))) * _volumeLinear;
+                        sample = MathF.Sign(MathF.Sin(Tau * Frequency * ((float)_frameNumber / (float)SampleRate))) * Gain;
                         break;
                     case ToneType.SawtoothWave:
                         // y = -((2 * amplitude) / pi) * arctan(cot(x * pi / period))
-                        sample = ((-Tau) * MathF.Atan(1f / MathF.Tan((_frameNumber * MathF.PI) / ((float)SampleRate / (float)Frequency)))) * _volumeLinear;
+                        sample = ((-Tau) * MathF.Atan(1f / MathF.Tan((_frameNumber * MathF.PI) / ((float)SampleRate / (float)Frequency)))) * Gain;
                         break;
                     case ToneType.TriangleWave:
                         // y = abs(2 * frequency * x % 2 - 1) * amplitude - offset
-                        sample = ((MathF.Abs((2 * Frequency * ((float)_frameNumber / (float)SampleRate)) % 2 - 1) * 2) - 1) * _volumeLinear;
+                        sample = ((MathF.Abs((2 * Frequency * ((float)_frameNumber / (float)SampleRate)) % 2 - 1) * 2) - 1) * Gain;
                         break;
                 }
                 // Copy sample to each channel
