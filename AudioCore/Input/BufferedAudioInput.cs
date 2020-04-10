@@ -146,11 +146,11 @@ namespace AudioCore.Input
         /// <param name="framesRequested">The number of frames required.</param>
         public override void GetFrames(Span<float> audioBuffer, int framesRequested)
         {
+            // Get the number of samples that can be returned, which is the smaller of either the number requested or the number available
+            int samplesToReturn = Math.Min(_sampleCount, audioBuffer.Length);
             // Copy the samples from the buffer
             lock (_lock)
             {
-                // Get the number of samples that can be returned, which is the smaller of either the number requested or the number available
-                int samplesToReturn = Math.Min(_sampleCount, audioBuffer.Length);
                 // If playing keep copying samples until we've got all that can be returned
                 if (PlaybackState == PlaybackState.PLAYING)
                 {
