@@ -4,7 +4,7 @@ mono: none
 solution: TtxFromTS.sln
 
 git:
-  depth: false
+  depth: 1
 
 script: dotnet build AudioCore/AudioCore.csproj --configuration Release 
 
