@@ -15,5 +15,5 @@ jobs:
     - os: osx
       osx_image: xcode11.3
     - os: windows
-      language: generic
+      language: shell
       install: choco install dotnetcore-sdk --version 3.1.201
