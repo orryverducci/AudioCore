@@ -1,0 +1,21 @@
+name: AudioCore Continuous Integration
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+    - 'AudioCore*/**'
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  mac-build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Change to Mac project directory
+      run: cd AudioCore.Mac
+    - name: Install dependencies
+      run: nuget restore AudioCore.Mac.csproj
+    - name: Build
+      run: msbuild AudioCore.Mac.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
