@@ -13,7 +13,10 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
+    - name: Install AudioCore dependencies
+      run: nuget restore AudioCore.csproj
+      working-directory: ./AudioCore
+    - name: Install AudioCore.Mac dependencies
       run: nuget restore AudioCore.Mac.csproj
       working-directory: ./AudioCore.Mac
     - name: Build
