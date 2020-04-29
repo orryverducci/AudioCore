@@ -86,9 +86,9 @@ namespace AudioCore.Input
         }
 
         /// <summary>
-        /// Gets or sets the volume of the test tone in dBFS.
+        /// Gets or sets the volume of the input in dBFS.
         /// </summary>
-        /// <value>The volume of the noise in dBFS.</value>
+        /// <value>The volume of the input in dBFS.</value>
         public int Volume
         {
             get => _volume;
