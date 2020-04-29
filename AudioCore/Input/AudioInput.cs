@@ -28,6 +28,21 @@ namespace AudioCore.Input
         /// The set audio volume in dBFS.
         /// </summary>
         private int _volume;
+
+        /// <summary>
+        /// The gain being applied to the audio.
+        /// </summary>
+        private float _gain = 1;
+
+        /// <summary>
+        /// The change in gain for each frame of audio.
+        /// </summary>
+        private float _gainChangePerFrame;
+
+        /// <summary>
+        /// The number of frames remaining in the transition.
+        /// </summary>
+        private int _transitionFramesRemaining = 0;
         #endregion
 
         #region Properties
@@ -105,7 +120,23 @@ namespace AudioCore.Input
         /// <summary>
         /// Gets the gain being applied to the audio.
         /// </summary>
-        protected float Gain { get; private set; } = 1;
+        protected float Gain
+        {
+            get
+            {
+                if (_transitionFramesRemaining > 0)
+                {
+                    _gain += _gainChangePerFrame;
+                    _transitionFramesRemaining--;
+                }
+                return _gain;
+            }
+            private set
+            {
+                _transitionFramesRemaining = 0;
+                _gain = value;
+            }
+        }
         #endregion
 
         #region Events
@@ -136,6 +167,21 @@ namespace AudioCore.Input
             {
                 PlaybackState = PlaybackState.STOPPED;
             }
+        }
+
+        /// <summary>
+        /// Transitions the volume of the input from the current value to a new value over a set period of time.
+        /// </summary>
+        /// <param name="volume">The new volume of the input in dBFS.</param>
+        /// <param name="time">The length of the transition in milliseconds.</param>
+        public void TransitionVolume(int volume, int time)
+        {
+            // Set the volume
+            _volume = volume;
+            // Calculate the number of frames to transition over
+            _transitionFramesRemaining = SampleRate / 1000 * time;
+            // Set the change in gain for each frame of audio
+            _gainChangePerFrame = (MathF.Pow(10, volume / 20f) - _gain) / _transitionFramesRemaining;
         }
 
         /// <summary>
