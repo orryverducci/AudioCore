@@ -110,10 +110,22 @@ namespace AudioCore.Input
             set
             {
                 _volume = value;
-                // Calculate linear volume (between 0 and 1) from dBFS value
-                Gain = MathF.Pow(10, value / 20f);
+                // Transition the volume if enabled, otherwise Calculate the linear gain (between 0 and 1) from the dBFS value and set it
+                if (AutoTransitionVolume)
+                {
+                    TransitionVolume(value, 10);
+                }
+                else
+                {
+                    Gain = MathF.Pow(10, value / 20f);
+                }
             }
         }
+
+        /// <summary>
+        /// Gets or sets if changes to the input volume should use a 10ms transition. Defaults to true.
+        /// </summary>
+        public bool AutoTransitionVolume { get; set; } = true;
         #endregion
 
         #region Protected Fields
