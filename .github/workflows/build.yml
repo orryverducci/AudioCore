@@ -22,3 +22,8 @@ jobs:
     - name: Build
       run: msbuild AudioCore.Mac.csproj /verbosity:normal /t:Rebuild /p:Configuration=Release
       working-directory: ./AudioCore.Mac
+    - name: Upload library artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: AudioCore-Mac-Library
+        path: AudioCore.Mac/bin/Release/
