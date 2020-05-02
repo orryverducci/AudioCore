@@ -183,9 +183,13 @@ namespace AudioCore.Input
                 }
             }
             // Apply gain to the samples
-            for (int i = 0; i < audioBuffer.Length; i++)
+            for (int i = 0; i < framesRequested; i++)
             {
-                audioBuffer[i] = audioBuffer[i] * Gain;
+                float gain = Gain;
+                for (int x = 0; x < Channels; x++)
+                {
+                    audioBuffer[i + x] = audioBuffer[i + x] * gain;
+                }
             }
         }
 
