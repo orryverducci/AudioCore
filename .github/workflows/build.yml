@@ -20,5 +20,5 @@ jobs:
       run: nuget restore AudioCore.Mac.csproj
       working-directory: ./AudioCore.Mac
     - name: Build
-      run: msbuild AudioCore.Mac.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
+      run: msbuild AudioCore.Mac.csproj /verbosity:normal /t:Rebuild /p:Configuration=Release
       working-directory: ./AudioCore.Mac
