@@ -27,6 +27,9 @@ jobs:
       with:
         name: AudioCore-Mac-Library
         path: AudioCore.Mac/bin/Release/
+    - name: Install AudioCore.Demo.Mac dependencies
+      run: nuget restore AudioCore.Demo.Mac.csproj
+      working-directory: ./AudioCore.Demo.Mac
     - name: Build demo application
       run: msbuild AudioCore.Demo.Mac.csproj /verbosity:normal /t:Rebuild /p:Configuration=Release
       working-directory: ./AudioCore.Demo.Mac
