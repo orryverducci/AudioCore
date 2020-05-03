@@ -188,7 +188,7 @@ namespace AudioCore.Input
                 float gain = Gain;
                 for (int x = 0; x < Channels; x++)
                 {
-                    audioBuffer[i + x] = audioBuffer[i + x] * gain;
+                    audioBuffer[(i * Channels) + x] *= gain;
                 }
             }
         }
