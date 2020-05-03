@@ -5,6 +5,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -14,6 +15,8 @@
             <Picker x:Name="outputPicker" Grid.Row="0" Grid.Column="1" />
             <Label Text="Input Device" Grid.Row="1" Grid.Column="0" />
             <Picker x:Name="inputPicker" Grid.Row="1" Grid.Column="1" />
+            <Label Text="Volume" Grid.Row="2" Grid.Column="0" />
+            <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Grid.Row="2" Grid.Column="1" ValueChanged="VolumeChanged" />
         </Grid>
         <Button x:Name="playbackButton" Text="Play" Clicked="PlaybackButtonClicked" HorizontalOptions="Start" />
     </StackLayout>

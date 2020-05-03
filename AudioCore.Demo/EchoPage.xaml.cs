@@ -24,6 +24,11 @@ namespace AudioCore.Demo
         /// The current playback status, <c>true</c> if currently playing, otherwise <c>false</c>.
         /// </summary>
         private bool _playing;
+
+        /// <summary>
+        /// The input volume.
+        /// </summary>
+        private int _volume;
         #endregion
 
         #region Constructor and Dispose
@@ -79,6 +84,20 @@ namespace AudioCore.Demo
                 StopPlayback();
             }
         }
+
+        /// <summary>
+        /// Handles the volume slider value being changed.
+        /// </summary>
+        /// <param name="sender">The sending object.</param>
+        /// <param name="e">The event arguments.</param>
+        private void VolumeChanged(object sender, EventArgs e)
+        {
+            _volume = (int)(Math.Log10(volumeSlider.Value) * 20);
+            if (_playing)
+            {
+                _input.Volume = _volume;
+            }
+        }
         #endregion
 
         #region Playback Methods
@@ -95,7 +114,8 @@ namespace AudioCore.Demo
                 // Create the platform audio input
                 _input = new PlatformInput(((AudioDevice)inputPicker.SelectedItem).ID)
                 {
-                    BufferSize = _output.BufferSize
+                    BufferSize = _output.BufferSize,
+                    Volume = _volume
                 };
                 // Add the input to the output
                 _output.AddInput(_input);
