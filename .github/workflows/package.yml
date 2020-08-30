@@ -1,0 +1,29 @@
+name: AudioCore Packaging
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+    - 'AudioCore*/**'
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  mac-build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-dotnet@v1
+      with:
+        source-url: https://nuget.pkg.github.com/orryverducci/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Install AudioCore dependencies
+      run: nuget restore AudioCore.csproj
+      working-directory: ./AudioCore
+    - name: Package AudioCore
+      run: dotnet pack AudioCore.csproj --configuration Release
+      working-directory: ./AudioCore
+    - name: Publish package
+      run: dotnet nuget push "bin/Release/AudioCore.0.1.0-alpha.nupkg"
+      working-directory: ./AudioCore
