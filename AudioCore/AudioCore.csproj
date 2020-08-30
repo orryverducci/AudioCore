@@ -10,6 +10,7 @@
     <Authors>Orry Verducci</Authors>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/orryverducci/AudioCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/orryverducci/AudioCore</RepositoryUrl>
     <PackageTags>audio sound media</PackageTags>
   </PropertyGroup>
 
