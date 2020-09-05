@@ -13,7 +13,7 @@ namespace AudioCore.Output
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Output.PlatformOutput"/> class using the system default audio output device.
         /// </summary>
-        public PlatformOutput() {}
+        public PlatformOutput() : base() {}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:AudioCore.Output.PlatformOutput"/> class using a specified audio output device.
