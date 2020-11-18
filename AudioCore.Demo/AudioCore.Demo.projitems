@@ -9,7 +9,7 @@
     <Import_RootNamespace>AudioCore.Demo</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)DemoApp.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)MainPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)MenuPage.xaml" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)TestTonePage.xaml" />
@@ -23,8 +23,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)DemoApp.xaml.cs">
+      <DependentUpon>DemoApp.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

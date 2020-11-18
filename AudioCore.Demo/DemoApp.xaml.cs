@@ -5,9 +5,9 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace AudioCore.Demo
 {
-    public partial class App : Application
+    public partial class DemoApp : Application
     {
-        public App()
+        public DemoApp()
         {
             InitializeComponent();
             MainPage = new MainPage();

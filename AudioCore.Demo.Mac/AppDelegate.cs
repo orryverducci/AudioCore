@@ -30,7 +30,7 @@ namespace AudioCore.Demo.Mac
         {
             PowerSaving.AllowPowerSaving = true;
             Forms.Init();
-            LoadApplication(new App());
+            LoadApplication(new DemoApp());
             base.DidFinishLaunching(notification);
         }
 
